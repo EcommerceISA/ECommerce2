@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using ECommerce2.Models;
+using ECommerce2.Classes;
 
 namespace ECommerce2.Controllers
 {
@@ -39,9 +40,18 @@ namespace ECommerce2.Controllers
         // GET: Users/Create
         public ActionResult Create()
         {
-            ViewBag.CityId = new SelectList(db.Cities, "CityId", "Name");
-            ViewBag.CompanyId = new SelectList(db.Companies, "CompanyId", "Name");
-            ViewBag.StateId = new SelectList(db.States, "StateId", "Name");
+            ViewBag.CityId = new SelectList(
+                CombosHelper.GetCities(),
+                "CityId", "Name");
+
+            ViewBag.CompanyId = new SelectList(
+                CombosHelper.GetCompanies(),
+                "CompanyId", "Name");
+
+            ViewBag.DepartmentId = new SelectList(
+                CombosHelper.GetStates(),
+                "DepartmentId", "Name");
+
             return View();
         }
 
@@ -56,12 +66,40 @@ namespace ECommerce2.Controllers
             {
                 db.Users.Add(user);
                 db.SaveChanges();
+                UsersHelper.CreateUserASP(user.UserName, "User");
+
+                if (user.PhotoFile != null)
+                {
+                    var folder = "~/Content/Users";
+                    var file = string.Format($"{user.UserId}.jpg");
+                    var response = FilesHelper.UploadPhoto(user.PhotoFile, folder, file);
+                    if (response)
+                    {
+                        var pic = string.Format($"{folder}/{file}");
+                        user.Photo = pic;
+                        db.Entry(user).State = EntityState.Modified;
+                        db.SaveChanges();
+                    }
+
+                }
                 return RedirectToAction("Index");
             }
 
-            ViewBag.CityId = new SelectList(db.Cities, "CityId", "Name", user.CityId);
-            ViewBag.CompanyId = new SelectList(db.Companies, "CompanyId", "Name", user.CompanyId);
-            ViewBag.StateId = new SelectList(db.States, "StateId", "Name", user.StateId);
+            ViewBag.CityId = new SelectList(
+                CombosHelper.GetCities(),
+                "CityId", "Name",
+                user.CityId);
+
+            ViewBag.CompanyId = new SelectList(
+                CombosHelper.GetCompanies(),
+                "CompanyId", "Name",
+                user.CompanyId);
+
+            ViewBag.DepartmentId = new SelectList(
+                CombosHelper.GetStates(),
+                "DepartmentId", "Name",
+                user.StateId);
+
             return View(user);
         }
 
@@ -77,9 +115,21 @@ namespace ECommerce2.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.CityId = new SelectList(db.Cities, "CityId", "Name", user.CityId);
-            ViewBag.CompanyId = new SelectList(db.Companies, "CompanyId", "Name", user.CompanyId);
-            ViewBag.StateId = new SelectList(db.States, "StateId", "Name", user.StateId);
+            ViewBag.CityId = new SelectList(
+                CombosHelper.GetCities(),
+                "CityId", "Name",
+                user.CityId);
+
+            ViewBag.CompanyId = new SelectList(
+                CombosHelper.GetCompanies(),
+                "CompanyId", "Name",
+                user.CompanyId);
+
+            ViewBag.DepartmentId = new SelectList(
+                CombosHelper.GetStates(),
+                "DepartmentId", "Name",
+                user.StateId);
+
             return View(user);
         }
 
@@ -92,13 +142,49 @@ namespace ECommerce2.Controllers
         {
             if (ModelState.IsValid)
             {
+                if (user.PhotoFile != null)
+                {
+                    var folder = "~/Content/Users";
+                    var file = string.Format($"{user.UserId}.jpg");
+                    var response = FilesHelper.UploadPhoto(user.PhotoFile, folder, file);
+                    if (response)
+                    {
+                        var pic = string.Format($"{folder}/{file}");
+                        user.Photo = pic;
+                    }
+
+                }
+
+                var db2 = new ECommerceContext();
+                var currentUser = db2.Users.Find(user.UserId);
+
+                if (currentUser.UserName != user.UserName)
+                {
+                    UsersHelper.UpdateUserName(currentUser.UserName, user.UserName);
+                }
+
+                db2.Dispose();
+
                 db.Entry(user).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.CityId = new SelectList(db.Cities, "CityId", "Name", user.CityId);
-            ViewBag.CompanyId = new SelectList(db.Companies, "CompanyId", "Name", user.CompanyId);
-            ViewBag.StateId = new SelectList(db.States, "StateId", "Name", user.StateId);
+
+            ViewBag.CityId = new SelectList(
+                CombosHelper.GetCities(),
+                "CityId", "Name",
+                user.CityId);
+
+            ViewBag.CompanyId = new SelectList(
+                CombosHelper.GetCompanies(),
+                "CompanyId", "Name",
+                user.CompanyId);
+
+            ViewBag.DepartmentId = new SelectList(
+                CombosHelper.GetStates(),
+                "DepartmentId", "Name",
+                user.StateId);
+
             return View(user);
         }
 
@@ -126,6 +212,19 @@ namespace ECommerce2.Controllers
             db.Users.Remove(user);
             db.SaveChanges();
             return RedirectToAction("Index");
+        }
+
+        public JsonResult GetCities(int stateId)
+        {
+            db.Configuration.ProxyCreationEnabled = false;
+            var cities = db.Cities.Where(m => m.StateId == stateId);
+            return Json(cities);
+        }
+        public JsonResult GetCompanies(int cityId)
+        {
+            db.Configuration.ProxyCreationEnabled = false;
+            var companies = db.Companies.Where(m => m.CityId == cityId);
+            return Json(companies);
         }
 
         protected override void Dispose(bool disposing)

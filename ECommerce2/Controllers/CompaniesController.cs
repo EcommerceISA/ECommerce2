@@ -63,11 +63,36 @@ namespace ECommerce2.Controllers
             {
                 db.Companies.Add(company);
                 db.SaveChanges();
+
+                if (company.LogoFile != null)
+                {
+                    var folder = "~/Content/Logos";
+                    var file = string.Format("{0}.jpg", company.CompanyId);
+                    var response = FilesHelper.UploadPhoto(company.LogoFile, folder, file);
+                    if (response)
+                    {
+                        var pic = string.Format("{0}/{1}", folder, file);
+                        company.Logo = pic;
+                        db.Entry(company).State = EntityState.Modified;
+                        db.SaveChanges();
+                    }
+                }
+
                 return RedirectToAction("Index");
             }
 
-            ViewBag.CityId = new SelectList(db.Cities, "CityId", "Name", company.CityId);
-            ViewBag.StateId = new SelectList(db.States, "StateId", "Name", company.StateId);
+            ViewBag.CityId = new SelectList(
+                CombosHelper.GetCities(),
+                "CityId",
+                "Name",
+                company.CityId);
+
+            ViewBag.DepartmentId = new SelectList(
+                CombosHelper.GetStates(),
+                "DepartmentId",
+                "Name",
+                company.StateId);
+
             return View(company);
         }
 
@@ -83,8 +108,17 @@ namespace ECommerce2.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.CityId = new SelectList(db.Cities, "CityId", "Name", company.CityId);
-            ViewBag.StateId = new SelectList(db.States, "StateId", "Name", company.StateId);
+            ViewBag.CityId = new SelectList(
+                CombosHelper.GetCities(),
+                "CityId",
+                "Name",
+                company.CityId);
+
+            ViewBag.DepartmentId = new SelectList(
+                CombosHelper.GetStates(),
+                "DepartmentId",
+                "Name",
+                company.StateId);
             return View(company);
         }
 
@@ -97,12 +131,35 @@ namespace ECommerce2.Controllers
         {
             if (ModelState.IsValid)
             {
+
+                if (company.LogoFile != null)
+                {
+                    var folder = "~/Content/Logos";
+                    var file = string.Format("{0}.jpg", company.CompanyId);
+                    var response = FilesHelper.UploadPhoto(company.LogoFile, folder, file);
+
+                    if (response)
+                    {
+                        var pic = string.Format("{0}/{1}", folder, file);
+                        company.Logo = pic;
+                    }
+                }
+
                 db.Entry(company).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.CityId = new SelectList(db.Cities, "CityId", "Name", company.CityId);
-            ViewBag.StateId = new SelectList(db.States, "StateId", "Name", company.StateId);
+            ViewBag.CityId = new SelectList(
+                CombosHelper.GetCities(),
+                "CityId",
+                "Name",
+                company.CityId);
+
+            ViewBag.DepartmentId = new SelectList(
+                CombosHelper.GetStates(),
+                "DepartmentId",
+                "Name",
+                company.StateId);
             return View(company);
         }
 
@@ -119,6 +176,13 @@ namespace ECommerce2.Controllers
                 return HttpNotFound();
             }
             return View(company);
+        }
+
+        public JsonResult GetCities(int stateId)
+        {
+            db.Configuration.ProxyCreationEnabled = false;
+            var cities = db.Cities.Where(m => m.StateId == stateId);
+            return Json(cities);
         }
 
         // POST: Companies/Delete/5

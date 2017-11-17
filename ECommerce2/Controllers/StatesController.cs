@@ -56,7 +56,7 @@ namespace ECommerce2.Controllers
                     db.SaveChanges();
                     return RedirectToAction("Index");
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
                     if (ex.InnerException != null &&
                                       ex.InnerException.InnerException != null &&
