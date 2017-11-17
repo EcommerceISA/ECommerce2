@@ -57,7 +57,7 @@ namespace ECommerce2.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "CompanyId,Name,Phone,Address,Logo,StateId,CityId")] Company company)
+        public ActionResult Create(Company company)
         {
             if (ModelState.IsValid)
             {
@@ -87,9 +87,9 @@ namespace ECommerce2.Controllers
                 "Name",
                 company.CityId);
 
-            ViewBag.DepartmentId = new SelectList(
+            ViewBag.StateId = new SelectList(
                 CombosHelper.GetStates(),
-                "DepartmentId",
+                "StateId",
                 "Name",
                 company.StateId);
 
@@ -114,11 +114,12 @@ namespace ECommerce2.Controllers
                 "Name",
                 company.CityId);
 
-            ViewBag.DepartmentId = new SelectList(
+            ViewBag.StateId = new SelectList(
                 CombosHelper.GetStates(),
-                "DepartmentId",
+                "StateId",
                 "Name",
                 company.StateId);
+
             return View(company);
         }
 
@@ -157,7 +158,7 @@ namespace ECommerce2.Controllers
 
             ViewBag.DepartmentId = new SelectList(
                 CombosHelper.GetStates(),
-                "DepartmentId",
+                "StateId",
                 "Name",
                 company.StateId);
             return View(company);

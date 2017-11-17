@@ -48,9 +48,9 @@ namespace ECommerce2.Controllers
                 CombosHelper.GetCompanies(),
                 "CompanyId", "Name");
 
-            ViewBag.DepartmentId = new SelectList(
+            ViewBag.StateId = new SelectList(
                 CombosHelper.GetStates(),
-                "DepartmentId", "Name");
+                "StateId", "Name");
 
             return View();
         }
@@ -60,7 +60,7 @@ namespace ECommerce2.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "UserId,UserName,FirstName,LastName,Phone,Address,Photo,StateId,CityId,CompanyId")] User user)
+        public ActionResult Create(User user)
         {
             if (ModelState.IsValid)
             {
@@ -95,9 +95,9 @@ namespace ECommerce2.Controllers
                 "CompanyId", "Name",
                 user.CompanyId);
 
-            ViewBag.DepartmentId = new SelectList(
+            ViewBag.StateId = new SelectList(
                 CombosHelper.GetStates(),
-                "DepartmentId", "Name",
+                "StateId", "Name",
                 user.StateId);
 
             return View(user);
@@ -125,9 +125,9 @@ namespace ECommerce2.Controllers
                 "CompanyId", "Name",
                 user.CompanyId);
 
-            ViewBag.DepartmentId = new SelectList(
+            ViewBag.StateId = new SelectList(
                 CombosHelper.GetStates(),
-                "DepartmentId", "Name",
+                "StateId", "Name",
                 user.StateId);
 
             return View(user);
@@ -138,7 +138,7 @@ namespace ECommerce2.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "UserId,UserName,FirstName,LastName,Phone,Address,Photo,StateId,CityId,CompanyId")] User user)
+        public ActionResult Edit(User user)
         {
             if (ModelState.IsValid)
             {
@@ -180,9 +180,9 @@ namespace ECommerce2.Controllers
                 "CompanyId", "Name",
                 user.CompanyId);
 
-            ViewBag.DepartmentId = new SelectList(
+            ViewBag.StateId = new SelectList(
                 CombosHelper.GetStates(),
-                "DepartmentId", "Name",
+                "StateId", "Name",
                 user.StateId);
 
             return View(user);

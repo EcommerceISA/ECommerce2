@@ -37,18 +37,23 @@
         <td>
             @Html.DisplayFor(modelItem => item.City.Name)
         </td>
+        
         <td>
             @Html.DisplayFor(modelItem => item.State.Name)
         </td>
+        
         <td>
             @Html.DisplayFor(modelItem => item.Name)
         </td>
+        
         <td>
             @Html.DisplayFor(modelItem => item.Phone)
         </td>
+        
         <td>
             @Html.DisplayFor(modelItem => item.Address)
         </td>
+
         <td>
             @if (!string.IsNullOrEmpty(item.Logo))
             {
@@ -56,6 +61,7 @@
                      style="width:100px; height:100px; max-width:100%;height: auto;" />
             }
         </td>
+        
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.CompanyId }) |
             @Html.ActionLink("Details", "Details", new { id=item.CompanyId }) |
