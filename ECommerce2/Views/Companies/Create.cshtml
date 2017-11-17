@@ -10,7 +10,7 @@
 @using (Html.BeginForm("Create", "Companies", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
         <h4>Company</h4>
         <hr />
@@ -78,4 +78,40 @@
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
+    <script type="text/javascript">
+        $(document).ready(
+        function ()
+        {
+            $("#StateId").change(
+                function ()
+                {
+                    $("#CityId").empty();
+                    $("#CityId").append('<option value = "0">[Select a city...]</option>');
+                    $.ajax(
+                    {
+                        type: 'POST',
+                        url: '@Url.Action("GetCities")',
+                        dataType: 'json',
+                        data: { stateId: $("#StateId").val() },
+                        success:
+                        function (data)
+                        {
+                            $.each(data,
+                                function (i, data2)
+                                {
+                                    $("#CityId").append(
+                                    '<option value="'
+                                    + data2.CityId + '">'
+                                    + data2.Name + '</option>');
+                                });
+                        },
+                        error: function (ex) {
+                            alert('Failed to retrieve cities.' + ex);
+                        }
+                    });
+                    return false;
+                })
+        });
+
+    </script>
 }
