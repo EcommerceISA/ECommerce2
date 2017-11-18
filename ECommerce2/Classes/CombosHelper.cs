@@ -46,7 +46,7 @@ namespace ECommerce2.Classes
 
             return companies.OrderBy(d => d.Name).ToList();
         }
-        /*
+        
         
         public static List<Tax> GetTaxes(int companyId)
         {
@@ -71,7 +71,7 @@ namespace ECommerce2.Classes
 
             return categories.OrderBy(d => d.Description).ToList();
         }
-        */
+        
         
         public void Dispose()
         {
