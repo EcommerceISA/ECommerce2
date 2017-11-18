@@ -194,11 +194,14 @@
     <Compile Include="Classes\MailHelper.cs" />
     <Compile Include="Classes\UsersHelper.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\CategoriesController.cs" />
     <Compile Include="Controllers\CitiesController.cs" />
     <Compile Include="Controllers\CompaniesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\ProductsController.cs" />
     <Compile Include="Controllers\StatesController.cs" />
+    <Compile Include="Controllers\TaxesController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -223,14 +226,29 @@
     <Compile Include="Migrations\201711150513090_AddUser.Designer.cs">
       <DependentUpon>201711150513090_AddUser.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201711172226553_AddTax.cs" />
+    <Compile Include="Migrations\201711172226553_AddTax.Designer.cs">
+      <DependentUpon>201711172226553_AddTax.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201711172358425_AddCategory.cs" />
+    <Compile Include="Migrations\201711172358425_AddCategory.Designer.cs">
+      <DependentUpon>201711172358425_AddCategory.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201711180004071_AddProduct.cs" />
+    <Compile Include="Migrations\201711180004071_AddProduct.Designer.cs">
+      <DependentUpon>201711180004071_AddProduct.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\Category.cs" />
     <Compile Include="Models\City.cs" />
     <Compile Include="Models\Company.cs" />
     <Compile Include="Models\ECommerceContext.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\Product.cs" />
     <Compile Include="Models\State.cs" />
+    <Compile Include="Models\Tax.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
@@ -320,6 +338,22 @@
     <Content Include="Views\Users\Details.cshtml" />
     <Content Include="Views\Users\Edit.cshtml" />
     <Content Include="Views\Users\Index.cshtml" />
+    <Content Include="Views\Taxes\Create.cshtml" />
+    <Content Include="Views\Taxes\Delete.cshtml" />
+    <Content Include="Views\Taxes\Details.cshtml" />
+    <Content Include="Views\Taxes\Edit.cshtml" />
+    <Content Include="Views\Taxes\Index.cshtml" />
+    <Content Include="Views\Categories\Create.cshtml" />
+    <Content Include="Views\Categories\Delete.cshtml" />
+    <Content Include="Views\Categories\Details.cshtml" />
+    <Content Include="Views\Categories\Edit.cshtml" />
+    <Content Include="Views\Categories\Index.cshtml" />
+    <Content Include="Views\Products\Create.cshtml" />
+    <Content Include="Views\Products\Delete.cshtml" />
+    <Content Include="Views\Products\Details.cshtml" />
+    <Content Include="Views\Products\Edit.cshtml" />
+    <Content Include="Views\Products\Index.cshtml" />
+    <Content Include="Views\Products\GetCatalog.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -354,6 +388,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201711150513090_AddUser.resx">
       <DependentUpon>201711150513090_AddUser.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201711172226553_AddTax.resx">
+      <DependentUpon>201711172226553_AddTax.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201711172358425_AddCategory.resx">
+      <DependentUpon>201711172358425_AddCategory.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201711180004071_AddProduct.resx">
+      <DependentUpon>201711180004071_AddProduct.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

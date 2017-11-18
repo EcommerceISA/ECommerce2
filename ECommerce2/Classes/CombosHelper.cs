@@ -47,6 +47,7 @@ namespace ECommerce2.Classes
             return companies.OrderBy(d => d.Name).ToList();
         }
         /*
+        
         public static List<Tax> GetTaxes(int companyId)
         {
             var taxes = db.Taxes.Where(t => t.CompanyId == companyId).ToList();
@@ -71,6 +72,7 @@ namespace ECommerce2.Classes
             return categories.OrderBy(d => d.Description).ToList();
         }
         */
+        
         public void Dispose()
         {
             db.Dispose();
