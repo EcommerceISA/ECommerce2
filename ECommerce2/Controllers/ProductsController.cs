@@ -22,6 +22,11 @@ namespace ECommerce2.Controllers
             return View(products);
         }
 
+        public ActionResult ProductsDetail()
+        {
+            return View();
+        }
+
         // GET: Products
         [Authorize(Roles = "User")]
         public ActionResult Index()
