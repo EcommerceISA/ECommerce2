@@ -25,6 +25,7 @@ namespace ECommerce2.Models
         public DbSet<Tax> Taxes { get; set; } 
         public DbSet<Category> Categories { get; set; } 
         public DbSet<Product> Products { get; set; }  
+        public DbSet<Warehouse> Warehouse { get; set; }  
 
     }
 }
