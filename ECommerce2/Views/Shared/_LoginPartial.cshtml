@@ -1,22 +1,47 @@
 ﻿@using Microsoft.AspNet.Identity
+<ul class="nav navbar-nav navbar-right">
+    <li>
+        <i class="glyphicon glyphicon-shopping-cart">
+            @Html.ActionLink("Cart", "Register", "Account")
+        </i>
+    </li>
+</ul>
+
 @if (Request.IsAuthenticated)
 {
+
+
     using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
     {
-    @Html.AntiForgeryToken()
+        @Html.AntiForgeryToken()
 
-    <ul class="nav navbar-nav navbar-right">
-        <li>
-            @Html.ActionLink("Hello " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
-        </li>
-        <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
-    </ul>
+        <ul class="nav navbar-nav navbar-right">
+            <li>
+                <span class="glyphicon glyphicon-user">
+                    @Html.ActionLink("Hello: " + User.Identity.GetUserName(), "Index", "Manage")
+                </span>
+            </li>
+            <li>
+                <span  class="glyphicon glyphicon-log-out">
+                    <a href="javascript:document.getElementById('logoutForm').submit()">Log off</a>
+                </span>
+            </li>
+        </ul>
     }
 }
 else
 {
     <ul class="nav navbar-nav navbar-right">
-        <li>@Html.ActionLink("Register", "Register", "Account", new { }, new { @class="glyphicon glyphicon-glass" })</li>
-        <li>@Html.ActionLink("Log in", "Login", "Account", new { }, new { @class="glyphicon glyphicon-lock" })</li>
+        <li>
+            <i class="glyphicon glyphicon-open">
+                @Html.ActionLink("Register", "Register", "Account")
+            </i>
+        </li>
+
+        <li>
+            <i class="glyphicon glyphicon-log-in">
+                @Html.ActionLink("Log in", "Login", "Account")
+            </i>
+        </li>
     </ul>
 }

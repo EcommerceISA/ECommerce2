@@ -3,8 +3,7 @@
     ViewBag.Title = "Manage";
 }
 
-<h2>@ViewBag.Title.</h2>
-<h2>Profile</h2>
+<h2>Admin Profile</h2>
 
 <p class="text-success">@ViewBag.StatusMessage</p>
 @if (User.IsInRole("Admin"))
@@ -70,9 +69,10 @@
                         </div>
                         <div class="panel panel-default">
                             <div class="panel-heading">
-                                <h4 class="panel-title">@Html.ActionLink("Warehouse", "Index", "Users")</h4>
+                                <h4 class="panel-title">@Html.ActionLink("Warehouse", "Index", "Warehouse")</h4>
                             </div>
                         </div>
+
                     </div><!--/category-productsr-->
                 </div>
             </div>

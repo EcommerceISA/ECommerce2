@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using ECommerce2.Models;
+using ECommerce2.Classes;
 
 namespace ECommerce2.Controllers
 {
@@ -17,8 +18,10 @@ namespace ECommerce2.Controllers
         // GET: Warehouses
         public ActionResult Index()
         {
-            var warehouse = db.Warehouse.Include(w => w.City).Include(w => w.Company).Include(w => w.State);
-            return View(warehouse.ToList());
+            var user = db.Users.Where(u => u.UserName == User.Identity.Name).FirstOrDefault();
+            var warehouses = db.Warehouse.Where(w => w.CompanyId == user.CompanyId).Include(w => w.City)
+                .Include(w => w.State);
+            return View(warehouses.ToList());
         }
 
         // GET: Warehouses/Details/5
@@ -39,10 +42,22 @@ namespace ECommerce2.Controllers
         // GET: Warehouses/Create
         public ActionResult Create()
         {
-            ViewBag.CityId = new SelectList(db.Cities, "CityId", "Name");
-            ViewBag.CompanyId = new SelectList(db.Companies, "CompanyId", "Name");
-            ViewBag.StateId = new SelectList(db.States, "StateId", "Name");
-            return View();
+            ViewBag.CityId = new SelectList(
+                CombosHelper.GetCities(), 
+                "CityId", "Name");
+
+            ViewBag.StateId = new SelectList(
+                CombosHelper.GetStates(), 
+                "StateId", "Name");
+
+            var user = db.Users.Where(u => u.UserName == User.Identity.Name)
+                .FirstOrDefault();
+
+            var warehouse = new Warehouse {
+                CompanyId = user.CompanyId
+            };
+
+            return View(warehouse);
         }
 
         // POST: Warehouses/Create
@@ -59,9 +74,14 @@ namespace ECommerce2.Controllers
                 return RedirectToAction("Index");
             }
 
-            ViewBag.CityId = new SelectList(db.Cities, "CityId", "Name", warehouse.CityId);
-            ViewBag.CompanyId = new SelectList(db.Companies, "CompanyId", "Name", warehouse.CompanyId);
-            ViewBag.StateId = new SelectList(db.States, "StateId", "Name", warehouse.StateId);
+            ViewBag.CityId = new SelectList(
+                CombosHelper.GetCities(warehouse.StateId), 
+                "CityId", "Name");
+
+            ViewBag.StateId = new SelectList(
+                CombosHelper.GetStates(), 
+                "StateId", "Name");
+
             return View(warehouse);
         }
 
@@ -77,9 +97,15 @@ namespace ECommerce2.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.CityId = new SelectList(db.Cities, "CityId", "Name", warehouse.CityId);
-            ViewBag.CompanyId = new SelectList(db.Companies, "CompanyId", "Name", warehouse.CompanyId);
-            ViewBag.StateId = new SelectList(db.States, "StateId", "Name", warehouse.StateId);
+
+            ViewBag.CityId = new SelectList(
+                CombosHelper.GetCities(warehouse.StateId),
+                "CityId", "Name");
+
+            ViewBag.StateId = new SelectList(
+                CombosHelper.GetStates(),
+                "StateId", "Name");
+
             return View(warehouse);
         }
 
@@ -96,9 +122,13 @@ namespace ECommerce2.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.CityId = new SelectList(db.Cities, "CityId", "Name", warehouse.CityId);
-            ViewBag.CompanyId = new SelectList(db.Companies, "CompanyId", "Name", warehouse.CompanyId);
-            ViewBag.StateId = new SelectList(db.States, "StateId", "Name", warehouse.StateId);
+            ViewBag.CityId = new SelectList(
+                CombosHelper.GetCities(warehouse.StateId),
+                "CityId", "Name");
+
+            ViewBag.StateId = new SelectList(
+                CombosHelper.GetStates(),
+                "StateId", "Name");
             return View(warehouse);
         }
 
