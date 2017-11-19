@@ -46,6 +46,6 @@ namespace ECommerce2.Models
         public virtual Company Company { get; set; }
         public virtual City City { get; set; }
         public virtual State State { get; set; }
-        //public virtual ICollection<Inventory> Inventories { get; set; }
+        public virtual ICollection<Inventory> Inventories { get; set; }
     }
 }

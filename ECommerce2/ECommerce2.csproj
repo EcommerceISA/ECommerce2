@@ -243,6 +243,10 @@
     <Compile Include="Migrations\201711182217265_AddWarehouse.Designer.cs">
       <DependentUpon>201711182217265_AddWarehouse.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201711190541543_AddInventory.cs" />
+    <Compile Include="Migrations\201711190541543_AddInventory.Designer.cs">
+      <DependentUpon>201711190541543_AddInventory.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Category.cs" />
@@ -250,6 +254,7 @@
     <Compile Include="Models\Company.cs" />
     <Compile Include="Models\ECommerceContext.cs" />
     <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\Inventory.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Product.cs" />
     <Compile Include="Models\State.cs" />
@@ -412,6 +417,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201711182217265_AddWarehouse.resx">
       <DependentUpon>201711182217265_AddWarehouse.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201711190541543_AddInventory.resx">
+      <DependentUpon>201711190541543_AddInventory.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
