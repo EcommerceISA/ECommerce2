@@ -27,6 +27,7 @@ namespace ECommerce2.Models
         public DbSet<Product> Products { get; set; }  
         public DbSet<Warehouse> Warehouse { get; set; }  
         public DbSet<Inventory> Inventories { get; set; }  
+        public DbSet<Customer> Customers { get; set; }  
 
     }
 }

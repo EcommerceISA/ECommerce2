@@ -1,0 +1,35 @@
+﻿@model IEnumerable<ECommerce2.Models.Product>
+
+@{
+    ViewBag.Title = "ECommerce";
+}
+<h2 class="title text-center">Productos Especiales</h2>
+<div class="col-sm-9 padding-right">
+    <div class="features_items">
+        @foreach (var item in Model)
+        {
+            <!--features_items-->
+            <div class="col-sm-4">
+                <div class="product-image-wrapper">
+                    <div class="single-products">
+                        <div class="productinfo text-center">
+                            @if (!string.IsNullOrEmpty(item.Image))
+                            {
+                                <img src="@Url.Content(item.Image)" alt="Image"
+                                     style="width:100px; height:100px; max-width:100%;" />
+                            }
+                            <p>@Html.DisplayFor(modelItem => item.Description)</p>
+                        </div>
+                        <div class="product-overlay">
+                            <div class="overlay-content">
+                                <h2>@Html.DisplayFor(modelItem => item.Price)</h2>
+                                <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+                                <i>@Html.ActionLink("Details", "Detail", "Catalog", new { }, new { @class = "btn btn-default add-to-cart" })</i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>

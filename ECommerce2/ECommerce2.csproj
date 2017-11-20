@@ -194,9 +194,11 @@
     <Compile Include="Classes\MailHelper.cs" />
     <Compile Include="Classes\UsersHelper.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\CatalogController.cs" />
     <Compile Include="Controllers\CategoriesController.cs" />
     <Compile Include="Controllers\CitiesController.cs" />
     <Compile Include="Controllers\CompaniesController.cs" />
+    <Compile Include="Controllers\CustomersController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\ProductsController.cs" />
@@ -247,11 +249,16 @@
     <Compile Include="Migrations\201711190541543_AddInventory.Designer.cs">
       <DependentUpon>201711190541543_AddInventory.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201711201848239_AddCustomer.cs" />
+    <Compile Include="Migrations\201711201848239_AddCustomer.Designer.cs">
+      <DependentUpon>201711201848239_AddCustomer.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Category.cs" />
     <Compile Include="Models\City.cs" />
     <Compile Include="Models\Company.cs" />
+    <Compile Include="Models\Customer.cs" />
     <Compile Include="Models\ECommerceContext.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\Inventory.cs" />
@@ -268,6 +275,10 @@
     <Content Include="Content\animate.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\Carousel\girl1.jpg" />
+    <Content Include="Content\Carousel\girl2.jpg" />
+    <Content Include="Content\Carousel\girl3.jpg" />
+    <Content Include="Content\Carousel\pricing.png" />
     <Content Include="Content\Logos\404.png" />
     <Content Include="Content\Logos\logo.png" />
     <Content Include="Content\main.css" />
@@ -365,13 +376,18 @@
     <Content Include="Views\Products\Details.cshtml" />
     <Content Include="Views\Products\Edit.cshtml" />
     <Content Include="Views\Products\Index.cshtml" />
-    <Content Include="Views\Products\GetCatalog.cshtml" />
-    <Content Include="Views\Products\ProductsDetail.cshtml" />
     <Content Include="Views\Warehouses\Create.cshtml" />
     <Content Include="Views\Warehouses\Delete.cshtml" />
     <Content Include="Views\Warehouses\Details.cshtml" />
     <Content Include="Views\Warehouses\Edit.cshtml" />
     <Content Include="Views\Warehouses\Index.cshtml" />
+    <Content Include="Views\Catalog\Index.cshtml" />
+    <Content Include="Views\Catalog\Details.cshtml" />
+    <Content Include="Views\Customers\Create.cshtml" />
+    <Content Include="Views\Customers\Delete.cshtml" />
+    <Content Include="Views\Customers\Details.cshtml" />
+    <Content Include="Views\Customers\Edit.cshtml" />
+    <Content Include="Views\Customers\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -421,6 +437,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201711190541543_AddInventory.resx">
       <DependentUpon>201711190541543_AddInventory.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201711201848239_AddCustomer.resx">
+      <DependentUpon>201711201848239_AddCustomer.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

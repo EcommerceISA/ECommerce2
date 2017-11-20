@@ -15,18 +15,6 @@ namespace ECommerce2.Controllers
     {
         private ECommerceContext db = new ECommerceContext();
 
-        public ActionResult GetCatalog()
-        {
-            var products = db.Products.ToList();
-
-            return View(products);
-        }
-
-        public ActionResult ProductsDetail()
-        {
-            return View();
-        }
-
         // GET: Products
         [Authorize(Roles = "User")]
         public ActionResult Index()
