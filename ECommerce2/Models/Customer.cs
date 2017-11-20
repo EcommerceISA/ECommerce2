@@ -24,7 +24,7 @@ namespace ECommerce2.Models
         public string UserName { get; set; }
 
         [Required(ErrorMessage ="The field {0} is required")]
-        [MaxLength(50, ErrorMessage ="The field {0} is required")]
+        [MaxLength(50, ErrorMessage ="The field {0} must be maximum {1} characters")]
         [Display(Name ="First Name")]
         public string FirstName { get; set; }
 
@@ -39,7 +39,7 @@ namespace ECommerce2.Models
         public string Phone { get; set; }
 
         [Required(ErrorMessage ="The field {0} is required")]
-        [Range(1, double.MaxValue, ErrorMessage ="The field {0} must be maximum {1} characters length")]
+        [MaxLength(256, ErrorMessage ="the field {0} must be maximum {1} characters")]
         public string Address { get; set; }
 
         [Required(ErrorMessage ="The field {0} is required")]

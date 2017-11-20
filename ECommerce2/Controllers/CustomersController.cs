@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using ECommerce2.Models;
+using ECommerce2.Classes;
 
 namespace ECommerce2.Controllers
 {
@@ -40,10 +41,20 @@ namespace ECommerce2.Controllers
         // GET: Customers/Create
         public ActionResult Create()
         {
-            ViewBag.CityId = new SelectList(db.Cities, "CityId", "Name");
-            ViewBag.CompanyId = new SelectList(db.Companies, "CompanyId", "Name");
-            ViewBag.StateId = new SelectList(db.States, "StateId", "Name");
-            return View();
+            var user = db.Users.Where(u => u.UserName == User.Identity.Name).FirstOrDefault();
+
+            ViewBag.CityId = new SelectList(
+                CombosHelper.GetCities(), 
+                "CityId", "Name");
+
+            ViewBag.StateId = new SelectList(
+                CombosHelper.GetStates(), 
+                "StateId", "Name");
+
+            var customer = new Customer {
+                CompanyId = user.CompanyId
+            };
+            return View(customer);
         }
 
         // POST: Customers/Create
@@ -57,12 +68,13 @@ namespace ECommerce2.Controllers
             {
                 db.Customers.Add(customer);
                 db.SaveChanges();
+                UsersHelper.CreateUserASP(customer.UserName, "Customer");
                 return RedirectToAction("Index");
             }
 
             ViewBag.CityId = new SelectList(db.Cities, "CityId", "Name", customer.CityId);
-            ViewBag.CompanyId = new SelectList(db.Companies, "CompanyId", "Name", customer.CompanyId);
             ViewBag.StateId = new SelectList(db.States, "StateId", "Name", customer.StateId);
+
             return View(customer);
         }
 
@@ -78,9 +90,16 @@ namespace ECommerce2.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.CityId = new SelectList(db.Cities, "CityId", "Name", customer.CityId);
-            ViewBag.CompanyId = new SelectList(db.Companies, "CompanyId", "Name", customer.CompanyId);
-            ViewBag.StateId = new SelectList(db.States, "StateId", "Name", customer.StateId);
+            ViewBag.CityId = new SelectList(
+                CombosHelper.GetCities(), 
+                "CityId", "Name", 
+                customer.CityId);
+
+            ViewBag.StateId = new SelectList(
+                CombosHelper.GetStates(), 
+                "StateId", "Name", 
+                customer.StateId);
+
             return View(customer);
         }
 
@@ -126,6 +145,7 @@ namespace ECommerce2.Controllers
             Customer customer = db.Customers.Find(id);
             db.Customers.Remove(customer);
             db.SaveChanges();
+            UsersHelper.DeleteUser(customer.UserName);
             return RedirectToAction("Index");
         }
 
