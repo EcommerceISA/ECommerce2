@@ -156,7 +156,7 @@ namespace ECommerce2.Controllers
                 "Name",
                 company.CityId);
 
-            ViewBag.DepartmentId = new SelectList(
+            ViewBag.StateId = new SelectList(
                 CombosHelper.GetStates(),
                 "StateId",
                 "Name",

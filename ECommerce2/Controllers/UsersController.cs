@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using ECommerce2.Models;
 using ECommerce2.Classes;
+using System.IO;
 
 namespace ECommerce2.Controllers
 {
@@ -71,11 +72,12 @@ namespace ECommerce2.Controllers
                 if (user.PhotoFile != null)
                 {
                     var folder = "~/Content/Users";
-                    var file = string.Format($"{user.UserId}.jpg");
+ 
+                    var file = string.Format("{0}.jpg", user.UserId);
                     var response = FilesHelper.UploadPhoto(user.PhotoFile, folder, file);
                     if (response)
                     {
-                        var pic = string.Format($"{folder}/{file}");
+                        var pic = string.Format("{0}/{1}", folder, file);
                         user.Photo = pic;
                         db.Entry(user).State = EntityState.Modified;
                         db.SaveChanges();
@@ -145,11 +147,12 @@ namespace ECommerce2.Controllers
                 if (user.PhotoFile != null)
                 {
                     var folder = "~/Content/Users";
-                    var file = string.Format($"{user.UserId}.jpg");
+                    
+                    var file = string.Format("{0}.jpg", user.UserId);
                     var response = FilesHelper.UploadPhoto(user.PhotoFile, folder, file);
                     if (response)
                     {
-                        var pic = string.Format($"{folder}/{file}");
+                        var pic = string.Format("{0}/{1}", folder, file);
                         user.Photo = pic;
                     }
 
