@@ -65,17 +65,9 @@
             <div class="container">
                 <div class="row">
                     <div class="col-sm-9">
-                        <div class="navbar-header">
-                            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                                <span class="sr-only">Toggle navigation</span>
-                                <span class="icon-bar"></span>
-                                <span class="icon-bar"></span>
-                                <span class="icon-bar"></span>
-                            </button>
-                        </div>
                         <div class="mainmenu pull-left">
                             <ul class="nav navbar-nav collapse navbar-collapse">
-                                <li>@Html.ActionLink("Home", "GetCatalog", "Products", new { }, new { @class = "active" })</li>
+                                <li>@Html.ActionLink("Home", "Index", "Catalogs", new { }, new { @class = "active" })</li>
                                 <li class="dropdown">
                                     <a href="#">Shop<i class="fa fa-angle-down"></i></a>
                                     <ul role="menu" class="sub-menu">
@@ -95,12 +87,15 @@
                                 </li>
                             </ul>
                         </div>
-                        <div class="col-sm-3">
-                            <div class="search_box pull-right">
-                                <input type="text" placeholder="Search" />
-                            </div>
+
+                    </div>
+
+                    <div class="col-sm-3">
+                        <div class="search_box pull-right">
+                            <input type="text" placeholder="Search" />
                         </div>
                     </div>
+
                 </div>
             </div><!--/header-bottom-->
         </div>
