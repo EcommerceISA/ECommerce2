@@ -21,8 +21,12 @@ namespace ECommerce2.Controllers
 
         public ActionResult Details(int companyId, int productId)
         {
+            var product = db.Products
+                .Where(p=>p.CompanyId==companyId)
+                .Select(p=>p.ProductId==productId)
+                .FirstOrDefault();
 
-            return View();
+            return View(product);
         }
 
     }
