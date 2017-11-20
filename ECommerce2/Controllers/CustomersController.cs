@@ -19,7 +19,7 @@ namespace ECommerce2.Controllers
         {
             var user = db.Users.Where(u => u.UserName == User.Identity.Name).FirstOrDefault();
             var customer = db.Customers.Where(c => c.CompanyId == user.CompanyId).Include(c => c.City).Include(c => c.State);
-            return View(customers.ToList());
+            return View(customer.ToList());
         }
 
         // GET: Customers/Details/5
