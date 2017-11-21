@@ -19,14 +19,18 @@ namespace ECommerce2.Controllers
         [Authorize(Roles = "User")]
         public ActionResult Index()
         {
+
             var user = db.Users
                .Where(u => u.UserName == User.Identity.Name)
                .FirstOrDefault();
+
 
             var products = db.Products
                 .Include(p => p.Category)
                 .Include(p => p.Tax)
                 .Where(p => p.CompanyId == user.CompanyId);
+
+
 
             return View(products.ToList());
         }

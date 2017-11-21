@@ -55,8 +55,8 @@ namespace ECommerce2.Models
         [DataType(DataType.MultilineText)]
         public string Remarks { get; set; }
 
-        [DisplayFormat(DataFormatString ="{0:N2}", ApplyFormatInEditMode =false)]
-        public double Stock { get { return Inventories.Sum(i => i.Stock); } }
+//        [DisplayFormat(DataFormatString ="{0:N2}", ApplyFormatInEditMode =false)]
+//        public double Stock { get { return Inventories.Sum(i => i.Stock); } }
 
         public virtual Company Company { get; set; }
 
