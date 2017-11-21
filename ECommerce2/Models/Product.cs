@@ -64,7 +64,8 @@ namespace ECommerce2.Models
 
         public virtual Tax Tax { get; set; }
 
-        public virtual ICollection<Inventory> Inventories { get; set; }
-
+        public ICollection<Inventory> Inventories { get; set; }
+        public ICollection<OrderDetail> OrderDetails { get; set; }
+        public ICollection<OrderDetailTmp> OrderDetailTmps { get; set; }
     }
 }

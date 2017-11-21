@@ -16,6 +16,7 @@ namespace ECommerce2.Models
         [MaxLength(50, ErrorMessage ="The field {0} must be maximum {1} characters length")]
         [Index("Status_description_Index", IsUnique =true)]
         public string Description { get; set; }
+        public ICollection<Order> Orders { get; set; }
 
     }
 }

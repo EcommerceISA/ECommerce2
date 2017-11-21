@@ -29,6 +29,9 @@ namespace ECommerce2.Models
         public DbSet<Inventory> Inventories { get; set; }  
         public DbSet<Customer> Customers { get; set; }  
         public DbSet<Status> Status { get; set; }  
+        public DbSet<Order> Orders { get; set; }
+        public DbSet<OrderDetail> OrderDetails { get; set; }  
+        public DbSet<OrderDetailTmp> OrderDetailTmps { get; set; }  
 
     }
 }

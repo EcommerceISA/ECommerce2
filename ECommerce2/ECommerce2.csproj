@@ -262,6 +262,18 @@
     <Compile Include="Migrations\201711202337446_AddStatus.Designer.cs">
       <DependentUpon>201711202337446_AddStatus.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201711210010441_AddOrder.cs" />
+    <Compile Include="Migrations\201711210010441_AddOrder.Designer.cs">
+      <DependentUpon>201711210010441_AddOrder.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201711210032158_AddOrderDetail.cs" />
+    <Compile Include="Migrations\201711210032158_AddOrderDetail.Designer.cs">
+      <DependentUpon>201711210032158_AddOrderDetail.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201711210051309_AddOrderDetailTmps.cs" />
+    <Compile Include="Migrations\201711210051309_AddOrderDetailTmps.Designer.cs">
+      <DependentUpon>201711210051309_AddOrderDetailTmps.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Category.cs" />
@@ -272,6 +284,9 @@
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\Inventory.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\Order.cs" />
+    <Compile Include="Models\OrderDetail.cs" />
+    <Compile Include="Models\OrderDetailTmp.cs" />
     <Compile Include="Models\Product.cs" />
     <Compile Include="Models\State.cs" />
     <Compile Include="Models\Status.cs" />
@@ -459,6 +474,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201711202337446_AddStatus.resx">
       <DependentUpon>201711202337446_AddStatus.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201711210010441_AddOrder.resx">
+      <DependentUpon>201711210010441_AddOrder.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201711210032158_AddOrderDetail.resx">
+      <DependentUpon>201711210032158_AddOrderDetail.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201711210051309_AddOrderDetailTmps.resx">
+      <DependentUpon>201711210051309_AddOrderDetailTmps.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
