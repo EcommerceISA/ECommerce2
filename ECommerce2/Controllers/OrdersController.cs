@@ -42,7 +42,7 @@ namespace ECommerce2.Controllers
         public ActionResult Create()
         {
             var user = db.Users.Where(u => u.UserName == User.Identity.Name).FirstOrDefault();
-            ViewBag.CustomerId = new SelectList(CombosHelper.GetCustomers(user.CompanyId), "CustomertId", "FullName");
+            ViewBag.CustomerId = new SelectList(CombosHelper.GetCustomers(user.CompanyId), "CustomerId", "FullName");
             return View();
         }
 
@@ -59,10 +59,8 @@ namespace ECommerce2.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-
-            ViewBag.CompanyId = new SelectList(db.Companies, "CompanyId", "Name", order.CompanyId);
-            ViewBag.CustomerId = new SelectList(db.Customers, "CustomerId", "UserName", order.CustomerId);
-            ViewBag.StatusId = new SelectList(db.Status, "StatusId", "Description", order.StatusId);
+            var user = db.Users.Where(u => u.UserName == User.Identity.Name).FirstOrDefault();
+            ViewBag.CustomerId = new SelectList(CombosHelper.GetCustomers(user.CompanyId), "CustomerId", "FullName");
             return View(order);
         }
 
