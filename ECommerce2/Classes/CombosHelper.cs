@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Collections;
 
 namespace ECommerce2.Classes
 {
@@ -58,8 +59,21 @@ namespace ECommerce2.Classes
 
             return companies.OrderBy(d => d.Name).ToList();
         }
-        
-        
+
+        public static List<Customer> GetCustomers(int companyId)
+        {
+            var customers = db.Customers
+                .Where(c => c.CompanyId == companyId)
+                .ToList();
+
+            customers.Add( new Customer {
+                CustomerId = 0,
+                FirstName = "[Select a Customer]...",
+            });
+
+            return customers.OrderBy(d => d.FirstName).ThenBy(c => c.LastName).ToList();
+        }
+
         public static List<Tax> GetTaxes(int companyId)
         {
             var taxes = db.Taxes.Where(t => t.CompanyId == companyId).ToList();

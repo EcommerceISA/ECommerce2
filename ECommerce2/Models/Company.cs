@@ -49,6 +49,7 @@ namespace ECommerce2.Models
         public virtual ICollection<Product> Products { get; set; }
         public virtual ICollection<Warehouse> Warehouse { get; set; }
         public virtual ICollection<Customer> Customers { get; set; }
+        public virtual ICollection<Order> Orders { get; set; }
 
     }
 }
