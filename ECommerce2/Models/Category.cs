@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ECommerce2.Models
@@ -22,6 +23,6 @@ namespace ECommerce2.Models
 
 
         public virtual Company Company { get; set; }
-         
+        public virtual ICollection<Product> Products { get; set; }
     }
 }

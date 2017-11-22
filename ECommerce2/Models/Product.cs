@@ -55,17 +55,15 @@ namespace ECommerce2.Models
         [DataType(DataType.MultilineText)]
         public string Remarks { get; set; }
 
-        [DisplayFormat(DataFormatString ="{0:N2}", ApplyFormatInEditMode =false)]
-        public double Stock { get { return Inventories.Sum(i => i.Stock); } }
+        [DisplayFormat(DataFormatString = "{0:N2}", ApplyFormatInEditMode = false)]
+        public double Stock { get => Inventories==null ? 0 : Inventories.Sum((i) => i.Stock); }
 
         public virtual Company Company { get; set; }
-
         public virtual Category Category { get; set; }
-
         public virtual Tax Tax { get; set; }
 
-        public ICollection<Inventory> Inventories { get; set; }
-        public ICollection<OrderDetail> OrderDetails { get; set; }
-        public ICollection<OrderDetailTmp> OrderDetailTmps { get; set; }
+        public virtual ICollection<Inventory> Inventories { get; set; }
+        public virtual ICollection<OrderDetail> OrderDetails { get; set; }
+        public virtual ICollection<OrderDetailTmp> OrderDetailTmps { get; set; }
     }
 }

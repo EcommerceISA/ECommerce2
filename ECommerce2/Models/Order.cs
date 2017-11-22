@@ -37,7 +37,7 @@ namespace ECommerce2.Models
         public virtual Customer Customer { get; set; }
         public virtual Status Status { get; set; }
         public virtual Company Company { get; set; }
-        public ICollection<OrderDetail> OrderDetails { get; set; }
+        public virtual ICollection<OrderDetail> OrderDetails { get; set; }
 
     }
 }

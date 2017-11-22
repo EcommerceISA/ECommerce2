@@ -43,6 +43,7 @@ namespace ECommerce2.Models
 
         public virtual State State { get; set; }
         public virtual City City { get; set; }
+
         public virtual ICollection<Category> Categories { get; set; }
         public virtual ICollection<Tax> Taxes { get; set; }
         public virtual ICollection<User> Users { get; set; }
