@@ -39,7 +39,7 @@ namespace ECommerce2.Models
         public double Quantity { get; set; }
 
         [DisplayFormat(DataFormatString ="{0:C2}", ApplyFormatInEditMode =false)]
-        public decimal Value { get; set; }
+        public decimal Value { get { return Price * (decimal) Quantity; } }
 
         public virtual Product Product { get; set; }
 

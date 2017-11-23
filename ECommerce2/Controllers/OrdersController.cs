@@ -15,6 +15,38 @@ namespace ECommerce2.Controllers
     {
         private ECommerceContext db = new ECommerceContext();
 
+        public ActionResult AddProduct()
+        {
+            var user = db.Users.Where(u => u.UserName == User.Identity.Name).FirstOrDefault();
+            ViewBag.ProductId = new SelectList(CombosHelper.GetProducts(user.CompanyId), "ProductId", "Description");
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult AddProduct(AddProductView view)
+        {
+            if (ModelState.IsValid)
+            {
+                var product = db.Products.Find(view.ProductId);
+                var orderDetailTmp = new OrderDetailTmp
+                {
+                    Description = product.Description,
+                    Price = product.Price,
+                    ProductId = product.ProductId,
+                    Quantity = view.Quantity,
+                    TaxRate = product.Tax.Rate,
+                    UserName = User.Identity.Name
+                };
+                db.OrderDetailTmps.Add(orderDetailTmp);
+                db.SaveChanges();
+                return Redirect("Create");
+            }
+
+            var user = db.Users.Where(u => u.UserName == User.Identity.Name).FirstOrDefault();
+            ViewBag.ProductId = new SelectList(CombosHelper.GetProducts(user.CompanyId), "ProductId", "Description");
+            return View();
+        }
+
         // GET: Orders
         public ActionResult Index()
         {
@@ -43,7 +75,16 @@ namespace ECommerce2.Controllers
         {
             var user = db.Users.Where(u => u.UserName == User.Identity.Name).FirstOrDefault();
             ViewBag.CustomerId = new SelectList(CombosHelper.GetCustomers(user.CompanyId), "CustomerId", "FullName");
-            return View();
+
+            var view = new NewOrderView
+            {
+                Date = DateTime.Now,
+                Details = db.OrderDetailTmps
+                .Where(odt => odt.UserName == User.Identity.Name)
+                .ToList()
+            };
+
+            return View(view);
         }
 
         // POST: Orders/Create

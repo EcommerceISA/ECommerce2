@@ -24,6 +24,17 @@ namespace ECommerce2.Classes
 
         }
 
+       public static List<Product> GetProducts(int companyId)
+        {
+            var product = db.Products.Where(p => p.CompanyId ==companyId).ToList();
+            product.Add(new Product
+            {
+                ProductId = 0,
+                Description="[Select a product ...]"
+            });
+            return product.OrderBy(p => p.Description).ToList();
+        }
+
         public static List<City> GetCities()
         {
             var cities = db.Cities.ToList();

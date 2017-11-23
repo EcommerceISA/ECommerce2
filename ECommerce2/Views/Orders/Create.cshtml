@@ -1,4 +1,4 @@
-﻿@model ECommerce2.Models.Order
+﻿@model ECommerce2.Models.NewOrderView
 
 @{
     ViewBag.Title = "Create";
@@ -6,15 +6,15 @@
 
 <h2>Create</h2>
 
-@using (Html.BeginForm()) 
+@using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
         <h4>Order</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
- 
+
         <div class="form-group">
             @Html.LabelFor(model => model.CustomerId, "CustomerId", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
@@ -23,7 +23,7 @@
             </div>
         </div>
 
- 
+
         <div class="form-group">
             @Html.LabelFor(model => model.Date, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
@@ -46,8 +46,87 @@
             </div>
         </div>
     </div>
+}@if (Model.Details.Count == 0)
+{
+    <h5>No details added yet</h5>
+}
+else
+{
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Details[0].Product.Image)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Details[0].Description)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Details[0].TaxRate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Details[0].Price)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Details[0].Quantity)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Details[0].Value)
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model.Details)
+        {
+            <tr>
+                <td>
+                    @if (!string.IsNullOrEmpty(item.Product.Image))
+                    {
+                        <img src="@Url.Content(item.Product.Image)" alt="Image"
+                             style="width:100px; height:100px; max-width:100%;height: auto;" />
+                    }
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td align="right">
+                    @Html.DisplayFor(modelItem => item.TaxRate)
+                </td>
+                <td align="right">
+                    @Html.DisplayFor(modelItem => item.Price)
+                </td>
+                <td align="right">
+                    @Html.DisplayFor(modelItem => item.Quantity)
+                </td>
+                <td align="right">
+                    @Html.DisplayFor(modelItem => item.Value)
+                </td>
+
+                <td>
+                    @Html.ActionLink("Delete", "DeleteProduct", new { id = item.ProductId }, new { @class = "btn btn-danger" })
+                </td>
+            </tr>
+        }
+        <tr>
+            <td colspan="4">
+                <strong>Total</strong>
+            </td>
+            <td align="right">
+                <strong>@Html.DisplayFor(modelItem => Model.TotalQuantity)</strong>
+            </td>
+            <td align="right">
+                <strong>@Html.DisplayFor(modelItem => Model.TotalValue)</strong>
+            </td>
+        </tr>
+
+    </table>
 }
 
+
+
+
+<div>
+    @Html.ActionLink("AddProduct", "AddProduct")
+</div>
 <div>
     @Html.ActionLink("Back to List", "Index")
 </div>
