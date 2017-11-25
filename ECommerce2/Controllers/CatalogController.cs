@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 
@@ -12,7 +13,7 @@ namespace ECommerce2.Controllers
         private ECommerceContext db = new ECommerceContext();
 
         // GET: Catalog
-        public ActionResult Index()
+        public ActionResult Index(string searchString)
         {
             var products = db.Products.ToList();
 
@@ -31,9 +32,9 @@ namespace ECommerce2.Controllers
 
         public ActionResult ViewCategories(int categoryId)
         {
-            var products = db.Products.Where(c => c.CategoryId == categoryId);
+            var products = db.Products.Where(c => c.CategoryId == categoryId).ToList();
 
-            return View(products.ToList());
+            return RedirectToAction("Index", products);
         }
 
     }

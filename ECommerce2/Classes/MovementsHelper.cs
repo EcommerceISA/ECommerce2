@@ -10,23 +10,12 @@ namespace ECommerce2.Classes
     {
         private static ECommerceContext db = new ECommerceContext();
 
-
-
-
-        public void Dispose()
-        {
-            db.Dispose();
-        }
-
         public static Response NewOrder(NewOrderView view, string userName)
         {
-
-
             using (var transaction = db.Database.BeginTransaction())
             {
-                try
-                {
                     var user = db.Users.Where(u => u.UserName == userName).FirstOrDefault();
+
                     var order = new Order
                     {
                         CompanyId = user.CompanyId,
@@ -35,6 +24,7 @@ namespace ECommerce2.Classes
                         Remarks = view.Remarks,
                         StatusId = DBHelper.GetStatus("Created", db),
                     };
+
                     db.Orders.Add(order);
                     db.SaveChanges();
 
@@ -58,19 +48,13 @@ namespace ECommerce2.Classes
                     db.SaveChanges();
                     transaction.Commit();
                     return new Response { Succeeded = true };
-                }
-                catch (Exception ex)
-                {
-                    transaction.Rollback();
-                    return new Response
-                    {
-                        Message = ex.Message,
-                        Succeeded = false
-                    };
-                }
             }
 
 
+        }
+        public void Dispose()
+        {
+            db.Dispose();
         }
     }
 }
