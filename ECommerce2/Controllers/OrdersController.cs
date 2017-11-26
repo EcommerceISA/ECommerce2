@@ -19,7 +19,7 @@ namespace ECommerce2.Controllers
         {
             var user = db.Users.Where(u => u.UserName == User.Identity.Name).FirstOrDefault();
             ViewBag.ProductId = new SelectList(CombosHelper.GetProducts(user.CompanyId), "ProductId", "Description");
-            return View();
+            return PartialView();
         }
 
         [HttpPost]
@@ -58,7 +58,7 @@ namespace ECommerce2.Controllers
             }
 
             ViewBag.ProductId = new SelectList(CombosHelper.GetProducts(user.CompanyId), "ProductId", "Description");
-            return View();
+            return PartialView();
         }
 
         public ActionResult DeleteProduct(int? id)
