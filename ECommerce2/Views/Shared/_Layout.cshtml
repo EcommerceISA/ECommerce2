@@ -40,13 +40,16 @@
                 </div>
             </div>
         </div><!--/header_top-->
+
         <div class="header-middle">
             <!--header-middle-->
             <div class="container">
                 <div class="row">
                     <div class="col-sm-4">
                         <div class="logo pull-left">
-                            <a href="index.html"><img src="~/Content/Logos/logo.png" alt="" /></a>
+                            <a href='@Url.Action("Index", "Home")'>
+                                <img src='@Url.Content("~/Content/Logos/logo.png")' />
+                            </a>
                         </div>
 
                     </div>
@@ -67,24 +70,41 @@
                     <div class="col-sm-9">
                         <div class="mainmenu pull-left">
                             <ul class="nav navbar-nav collapse navbar-collapse">
-                                <li>@Html.ActionLink("Home", "Index", "Catalog", new { }, new { @class = "active" })</li>
+                                <li>@Html.ActionLink("Home", "Index", "Home", new { }, new { @class = "active" })</li>
+                                
                                 <li class="dropdown">
-                                    <a href="#">Shop<i class="fa fa-angle-down"></i></a>
+                                    <a href="#">Tecnologia<i class="fa fa-angle-down"></i></a>
                                     <ul role="menu" class="sub-menu">
-                                        
-                                        <li><a>Product Details</a></li>
-                                        <li><a>Checkout</a></li>
-                                        <li><a>Cart</a></li>
-                                        <li><a>Login</a></li>
+                                        <li><a>@Html.ActionLink("Audio", "ViewCategories", "Catalog", new { categoryName = "Audio" }, new { })</a></li>
+                                        <li><a>@Html.ActionLink("Smartphones", "ViewCategories", "Catalog", new { categoryName = "Smartphones" }, new { })</a></li>
+                                        <li><a>@Html.ActionLink("Computadoras", "ViewCategories", "Catalog", new { categoryName = "Computadoras" }, new { })</a></li>
+                                        <li><a>@Html.ActionLink("TV y Videos", "ViewCategories", "Catalog", new { categoryName = "TV y Videos" }, new { })</a></li>
+                                        <li><a>@Html.ActionLink("Videojuegos", "ViewCategories", "Catalog", new { categoryName = "Videojuegos"}, new { })</a></li>
                                     </ul>
                                 </li>
+
                                 <li class="dropdown">
-                                    <a href="#">Blog<i class="fa fa-angle-down"></i></a>
+                                    <a href="#">Hogar<i class="fa fa-angle-down"></i></a>
                                     <ul role="menu" class="sub-menu">
-                                        <li><a href="blog.html">Blog List</a></li>
-                                        <li><a href="blog-single.html">Blog Single</a></li>
+                                        <li><a>@Html.ActionLink("Muebles", "ViewCategories", "Catalog", new { categoryName = "Muebles" }, new { })</a></li>
+                                        <li><a>@Html.ActionLink("Electrodomesticos", "ViewCategories", "Catalog", new { categoryName = "Electrodomesticos" }, new { })</a></li>
+                                        <li><a>@Html.ActionLink("Pintura", "ViewCategories", "Catalog", new { categoryName = "Pintura" }, new { })</a></li>
+                                        <li><a>@Html.ActionLink("Jardineria", "ViewCategories", "Catalog", new { categoryName = "Jardineria" }, new { })</a></li>
+                                        <li><a>@Html.ActionLink("Interiores", "ViewCategories", "Catalog", new { categoryName = "Interiores" }, new { })</a></li>
                                     </ul>
                                 </li>
+
+                                <li class="dropdown">
+                                    <a href="#">Super Mercado<i class="fa fa-angle-down"></i></a>
+                                    <ul role="menu" class="sub-menu">
+                                        <li><a>@Html.ActionLink("Frutas", "ViewCategories", "Catalog", new { categoryName = "Frutas" }, new { })</a></li>
+                                        <li><a>@Html.ActionLink("Verduras", "ViewCategories", "Catalog", new { categoryName = "Verduras" }, new { })</a></li>
+                                        <li><a>@Html.ActionLink("De temporada", "ViewCategories", "Catalog", new { categoryName = "De temporada" }, new { })</a></li>
+                                        <li><a>@Html.ActionLink("Lacteos", "ViewCategories", "Catalog", new { categoryName = "Lacteos" }, new { })</a></li>
+                                        <li><a>@Html.ActionLink("Salquichoneria", "ViewCategories", "Catalog", new { categoryName = "Salchiconeria" }, new { })</a></li>
+                                    </ul>
+                                </li>
+
                             </ul>
                         </div>
 

@@ -67,3 +67,12 @@
 <div>
     @Html.ActionLink("Back to List", "Index")
 </div>
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script type="text/javascript">
+        var UrlCities = '@Url.Action("GetCities", "Generic")';
+    </script>
+
+}

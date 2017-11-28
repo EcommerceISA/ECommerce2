@@ -35,6 +35,17 @@ namespace ECommerce2.Classes
             return product.OrderBy(p => p.Description).ToList();
         }
 
+        public static List<Product> GetProducts()
+        {
+            var product = db.Products.ToList();
+            product.Add(new Product
+            {
+                ProductId = 0,
+                Description = "[Select a product ...]"
+            });
+            return product.OrderBy(p => p.Description).ToList();
+        }
+
         public static List<City> GetCities()
         {
             var cities = db.Cities.ToList();
@@ -47,9 +58,9 @@ namespace ECommerce2.Classes
             return cities.OrderBy(d => d.Name).ToList();
         }
 
-        public static List<City> GetCities(int departmentId)
+        public static List<City> GetCities(int stateId)
         {
-            var cities = db.Cities.Where(c => c.StateId == departmentId).OrderBy(d => d.Name).ToList();
+            var cities = db.Cities.Where(c => c.StateId == stateId).OrderBy(d => d.Name).ToList();
             cities.Add(new City
             {
                 CityId = 0,

@@ -150,6 +150,7 @@ namespace ECommerce2.Controllers
                     
                     var file = string.Format("{0}.jpg", user.UserId);
                     var response = FilesHelper.UploadPhoto(user.PhotoFile, folder, file);
+
                     if (response)
                     {
                         var pic = string.Format("{0}/{1}", folder, file);
@@ -217,18 +218,7 @@ namespace ECommerce2.Controllers
             return RedirectToAction("Index");
         }
 
-        public JsonResult GetCities(int stateId)
-        {
-            db.Configuration.ProxyCreationEnabled = false;
-            var cities = db.Cities.Where(m => m.StateId == stateId);
-            return Json(cities);
-        }
-        public JsonResult GetCompanies(int cityId)
-        {
-            db.Configuration.ProxyCreationEnabled = false;
-            var companies = db.Companies.Where(m => m.CityId == cityId);
-            return Json(companies);
-        }
+
 
         protected override void Dispose(bool disposing)
         {

@@ -14,7 +14,7 @@ namespace ECommerce2.Models
         public int CustomerId { get; set; }
 
         [Required(ErrorMessage ="The field {0} is required")]
-        [DisplayFormat(DataFormatString ="{0:yyyy-MM-dd}", ApplyFormatInEditMode =true)]
+        [DataType(DataType.Date)]
         public DateTime Date { get; set; }
 
         [DataType(DataType.MultilineText)]

@@ -30,9 +30,9 @@ namespace ECommerce2.Controllers
             return View(product);
         }
 
-        public ActionResult ViewCategories(int categoryId)
+        public ActionResult ViewCategories(string categoryName)
         {
-            var products = db.Products.Where(c => c.CategoryId == categoryId).ToList();
+            var products = db.Products.Where(c => c.Description.Contains(categoryName)).ToList();
 
             return RedirectToAction("Index", products);
         }

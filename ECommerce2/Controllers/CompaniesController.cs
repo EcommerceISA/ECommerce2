@@ -179,13 +179,6 @@ namespace ECommerce2.Controllers
             return View(company);
         }
 
-        public JsonResult GetCities(int stateId)
-        {
-            db.Configuration.ProxyCreationEnabled = false;
-            var cities = db.Cities.Where(m => m.StateId == stateId);
-            return Json(cities);
-        }
-
         // POST: Companies/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]

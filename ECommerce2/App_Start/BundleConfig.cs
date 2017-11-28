@@ -23,6 +23,7 @@ namespace ECommerce2
                       "~/Scripts/bootstrap.js",
                       "~/Scripts/moment.js",
                       "~/Scripts/fileupload.js",
+                      "~/Scripts/ecommerce.js",
                       "~/Scripts/bootstrap-datetimepicker.js",
                       "~/Scripts/respond.js"));
 

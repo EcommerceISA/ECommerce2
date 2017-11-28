@@ -24,6 +24,7 @@ namespace ECommerce2.Controllers
         }
 
         // GET: Customers/Details/5
+
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -144,9 +145,14 @@ namespace ECommerce2.Controllers
         {
             Customer customer = db.Customers.Find(id);
             db.Customers.Remove(customer);
-            db.SaveChanges();
-            UsersHelper.DeleteUser(customer.UserName);
-            return RedirectToAction("Index");
+            var response = DBHelper.SaveChanges(db);
+            if (response.Succeeded)
+            {
+                UsersHelper.DeleteUser(customer.UserName);
+                return RedirectToAction("Index");
+            }
+            ModelState.AddModelError(string.Empty, response.Message);
+            return View(customer);
         }
 
         protected override void Dispose(bool disposing)
