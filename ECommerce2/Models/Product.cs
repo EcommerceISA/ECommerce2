@@ -36,7 +36,7 @@ namespace ECommerce2.Models
         public int CategoryId { get; set; }
 
         [Required(ErrorMessage ="The field {0} is required")]
-        [Range(0, 1, ErrorMessage ="You must select a {0}")]
+        [Range(1, double.MaxValue, ErrorMessage ="You must select a {0}")]
         [Display(Name ="Tax")]
         public int TaxId { get; set; }
 

@@ -17,7 +17,10 @@ namespace ECommerce2.Controllers
         // GET: Categories
         public ActionResult Index()
         {
-            var categories = db.Categories.Include(c => c.Company);
+            var user = db.Users.Where(u => u.UserName == User.Identity.Name).FirstOrDefault();
+
+            var categories = db.Categories.Where(c => c.CompanyId == user.CompanyId);
+
             return View(categories.ToList());
         }
 

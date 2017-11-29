@@ -13,7 +13,7 @@ namespace ECommerce2.Controllers
         private ECommerceContext db = new ECommerceContext();
 
         // GET: Catalog
-        public ActionResult Index(string searchString)
+        public ActionResult Index()
         {
             var products = db.Products.ToList();
 
@@ -34,7 +34,13 @@ namespace ECommerce2.Controllers
         {
             var products = db.Products.Where(c => c.Description.Contains(categoryName)).ToList();
 
-            return RedirectToAction("Index", products);
+            if (products==null)
+            {
+                return RedirectToAction("Index");
+
+            }
+
+            return RedirectToAction("Index", "Catalog", products);
         }
 
     }

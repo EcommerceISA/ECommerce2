@@ -16,7 +16,7 @@ namespace ECommerce2.Controllers
         private ECommerceContext db = new ECommerceContext();
 
         // GET: Products
-        [Authorize(Roles = "User")]
+        //[Authorize(Roles = "User")]
         public ActionResult Index()
         {
             var user = db.Users
@@ -32,7 +32,7 @@ namespace ECommerce2.Controllers
         }
 
         // GET: Products/Details/5
-        [Authorize(Roles = "User")]
+        //[Authorize(Roles = "User")]
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -48,7 +48,7 @@ namespace ECommerce2.Controllers
         }
 
         // GET: Products/Create
-        [Authorize(Roles = "User")]
+        //[Authorize(Roles = "User")]
         public ActionResult Create()
         {
             var user = db.Users
@@ -81,9 +81,11 @@ namespace ECommerce2.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "User")]
+        //[Authorize(Roles = "User")]
         public ActionResult Create(Product product)
         {
+            var user = db.Users.Where(u => u.UserName == User.Identity.Name).FirstOrDefault();
+
             if (ModelState.IsValid)
             {
                 db.Products.Add(product);
@@ -109,20 +111,19 @@ namespace ECommerce2.Controllers
             }
 
             ViewBag.CategoryId = new SelectList(
-                CombosHelper.GetCategories(product.CompanyId),
+                CombosHelper.GetCategories(user.CompanyId),
                 "CategoryId",
-                "Description", product.CategoryId);
+                "Description");
 
             ViewBag.TaxId = new SelectList(
-                CombosHelper.GetTaxes(product.CompanyId),
-                "TaxId", "Description",
-                product.TaxId);
+                CombosHelper.GetTaxes(user.CompanyId),
+                "TaxId", "Description");
 
             return View(product);
         }
 
         // GET: Products/Edit/5
-        [Authorize(Roles = "User")]
+        //[Authorize(Roles = "User")]
         public ActionResult Edit(int? id)
         {
 
@@ -156,7 +157,7 @@ namespace ECommerce2.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "User")]
+        //[Authorize(Roles = "User")]
         public ActionResult Edit(Product product)
         {
             if (ModelState.IsValid)
@@ -180,7 +181,7 @@ namespace ECommerce2.Controllers
         }
 
         // GET: Products/Delete/5
-        [Authorize(Roles = "User")]
+        //[Authorize(Roles = "User")]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -198,7 +199,7 @@ namespace ECommerce2.Controllers
         // POST: Products/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "User")]
+        //[Authorize(Roles = "User")]
         public ActionResult DeleteConfirmed(int id)
         {
             Product product = db.Products.Find(id);
@@ -207,7 +208,7 @@ namespace ECommerce2.Controllers
             return RedirectToAction("Index");
         }
 
-        [Authorize(Roles = "User")]
+        //[Authorize(Roles = "User")]
         protected override void Dispose(bool disposing)
         {
             if (disposing)

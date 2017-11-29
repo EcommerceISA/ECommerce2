@@ -17,7 +17,8 @@ namespace ECommerce2.Controllers
         // GET: Taxes
         public ActionResult Index()
         {
-            var taxes = db.Taxes.Include(t => t.Company);
+            var user = db.Users.Where(u => u.UserName == User.Identity.Name).FirstOrDefault();
+            var taxes = db.Taxes.Where(t => t.CompanyId == user.CompanyId);
             return View(taxes.ToList());
         }
 
@@ -48,7 +49,7 @@ namespace ECommerce2.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "TaxId,Description,Rate,CompanyId")] Tax tax)
+        public ActionResult Create(Tax tax)
         {
             if (ModelState.IsValid)
             {
@@ -82,7 +83,7 @@ namespace ECommerce2.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "TaxId,Description,Rate,CompanyId")] Tax tax)
+        public ActionResult Edit(Tax tax)
         {
             if (ModelState.IsValid)
             {
