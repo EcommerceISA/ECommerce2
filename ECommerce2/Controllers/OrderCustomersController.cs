@@ -80,97 +80,25 @@ namespace ECommerce2.Controllers
             return View(view);
         }
 
-        public ActionResult AddProduct()
+        public ActionResult ShopingCart(int? companyId, int? productId)
         {
-            ViewBag.ProductId = new SelectList(CombosHelper.GetProducts(), "ProductId", "Description");
-            return PartialView();
-        }
-
-        [HttpPost]
-        public ActionResult AddProduct(AddProductView view)
-        {
-            var user = db.Users.Where(u => u.UserName == User.Identity.Name).FirstOrDefault();
-
-            if (ModelState.IsValid)
+            if (companyId == null || productId == null)
             {
-                var orderDetailTmp = db.OrderDetailTmps
-                    .Where(odt => odt.UserName == User.Identity.Name && odt.ProductId == view.ProductId)
-                    .FirstOrDefault();
-                if (orderDetailTmp == null)
-                {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            var product = db.Products.Where(p => p.CompanyId == companyId && p.ProductId == productId).First();
 
-
-                    var product = db.Products.Find(view.ProductId);
-                    orderDetailTmp = new OrderDetailTmp
-                    {
-                        Description = product.Description,
-                        Price = product.Price,
-                        ProductId = product.ProductId,
-                        Quantity = view.Quantity,
-                        TaxRate = product.Tax.Rate,
-                        UserName = User.Identity.Name
-                    };
-                    db.OrderDetailTmps.Add(orderDetailTmp);
-                }
-                else
-                {
-                    orderDetailTmp.Quantity += view.Quantity;
-                    db.Entry(orderDetailTmp).State = EntityState.Modified;
-                }
-                db.SaveChanges();
-                return Redirect("Create");
+            if (product == null)
+            {
+                return HttpNotFound();
             }
 
-            ViewBag.ProductId = new SelectList(CombosHelper.GetProducts(user.CompanyId), "ProductId", "Description");
-            return PartialView();
+
+            return View("Index");
+
         }
 
 
-        public ActionResult ShopingCart()
-        {
-            var user = db.Users.Where(u => u.UserName == User.Identity.Name).FirstOrDefault();
-            ViewBag.ProductId = new SelectList(CombosHelper.GetProducts(), "ProductId", "Description");
-            return PartialView();
-        }
-
-        [HttpPost]
-        public ActionResult ShopingCart(AddProductView view)
-        {
-            var user = db.Users.Where(u => u.UserName == User.Identity.Name).FirstOrDefault();
-
-            if (ModelState.IsValid)
-            {
-                var orderDetailTmp = db.OrderDetailTmps
-                    .Where(odt => odt.UserName == User.Identity.Name && odt.ProductId == view.ProductId)
-                    .FirstOrDefault();
-                if (orderDetailTmp == null)
-                {
-
-
-                    var product = db.Products.Find(view.ProductId);
-                    orderDetailTmp = new OrderDetailTmp
-                    {
-                        Description = product.Description,
-                        Price = product.Price,
-                        ProductId = product.ProductId,
-                        Quantity = view.Quantity,
-                        TaxRate = product.Tax.Rate,
-                        UserName = User.Identity.Name
-                    };
-                    db.OrderDetailTmps.Add(orderDetailTmp);
-                }
-                else
-                {
-                    orderDetailTmp.Quantity += view.Quantity;
-                    db.Entry(orderDetailTmp).State = EntityState.Modified;
-                }
-                db.SaveChanges();
-                return Redirect("Create");
-            }
-
-            ViewBag.ProductId = new SelectList(CombosHelper.GetProducts(user.CompanyId), "ProductId", "Description");
-            return PartialView();
-        }
 
 
         public ActionResult DeleteProduct(int? id)

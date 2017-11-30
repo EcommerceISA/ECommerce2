@@ -16,6 +16,8 @@ namespace ECommerce2.Controllers
     [Authorize]
     public class AccountController : Controller
     {
+        private ECommerceContext db = new ECommerceContext();
+
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
 
@@ -23,7 +25,7 @@ namespace ECommerce2.Controllers
         {
         }
 
-        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager )
+        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
         {
             UserManager = userManager;
             SignInManager = signInManager;
@@ -35,9 +37,9 @@ namespace ECommerce2.Controllers
             {
                 return _signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>();
             }
-            private set 
-            { 
-                _signInManager = value; 
+            private set
+            {
+                _signInManager = value;
             }
         }
 
@@ -80,6 +82,7 @@ namespace ECommerce2.Controllers
             switch (result)
             {
                 case SignInStatus.Success:
+                    Logo(model);
                     return RedirectToLocal(returnUrl);
                 case SignInStatus.LockedOut:
                     return View("Lockout");
@@ -121,7 +124,7 @@ namespace ECommerce2.Controllers
             // If a user enters incorrect codes for a specified amount of time then the user account 
             // will be locked out for a specified amount of time. 
             // You can configure the account lockout settings in IdentityConfig
-            var result = await SignInManager.TwoFactorSignInAsync(model.Provider, model.Code, isPersistent:  model.RememberMe, rememberBrowser: model.RememberBrowser);
+            var result = await SignInManager.TwoFactorSignInAsync(model.Provider, model.Code, isPersistent: model.RememberMe, rememberBrowser: model.RememberBrowser);
             switch (result)
             {
                 case SignInStatus.Success:
@@ -140,6 +143,16 @@ namespace ECommerce2.Controllers
         [AllowAnonymous]
         public ActionResult Register()
         {
+
+            ViewBag.CityId = new SelectList(
+                CombosHelper.GetCities(),
+                "CityId", "Name");
+
+            ViewBag.StateId = new SelectList(
+                CombosHelper.GetStates(),
+                "StateId", "Name");
+
+
             return View();
         }
 
@@ -158,15 +171,15 @@ namespace ECommerce2.Controllers
                 //var result = await UserManager.CreateAsync(user, model.Password);
                 //if (result.Succeeded)
                 //{
-                  //  await SignInManager.SignInAsync(, isPersistent:false, rememberBrowser:false);
-                    
-                    //For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
-                    // Send an email with this link
-                    // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
-                    // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-                    // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
+                //  await SignInManager.SignInAsync(, isPersistent:false, rememberBrowser:false);
 
-                    //return RedirectToAction("Index", "Home");
+                //For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
+                // Send an email with this link
+                // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
+                // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
+                // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
+
+                //return RedirectToAction("Index", "Home");
                 //}
                 //AddErrors(result);
             }
@@ -396,6 +409,7 @@ namespace ECommerce2.Controllers
         public ActionResult LogOff()
         {
             AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
+            Session["Logo"] = null;
             return RedirectToAction("Index", "Home");
         }
 
@@ -405,6 +419,19 @@ namespace ECommerce2.Controllers
         public ActionResult ExternalLoginFailure()
         {
             return View();
+        }
+
+        public void Logo(LoginViewModel model)
+        {
+            var user = db.Users.Where(u => u.UserName == model.Email).FirstOrDefault();
+            if (user != null)
+            {
+                var company = db.Companies.Find(user.CompanyId);
+                if (company != null)
+                {
+                    Session["Logo"] = company.Logo;
+                }
+            }
         }
 
         protected override void Dispose(bool disposing)
@@ -422,6 +449,7 @@ namespace ECommerce2.Controllers
                     _signInManager.Dispose();
                     _signInManager = null;
                 }
+                db.Dispose();
             }
 
             base.Dispose(disposing);

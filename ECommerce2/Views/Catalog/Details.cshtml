@@ -1,61 +1,30 @@
-﻿
+﻿@model ECommerce2.Models.Product
+
 @{
     ViewBag.Title = "ProductsDetail";
 }
 
-<h2>ProductsDetail</h2>
 
 <div class="col-sm-9 padding-right">
     <div class="product-details">
         <!--product-details-->
         <div class="col-sm-5">
             <div class="view-product">
-                <img src="images/product-details/1.jpg" alt="" />
-                <h3>ZOOM</h3>
+                @if (!string.IsNullOrEmpty(Model.Image))
+                {
+                    <img src="@Url.Content(Model.Image)" alt="Image"
+                         style="width:800px; height:450px; max-width:100%;" />
+                }
             </div>
-            <div id="similar-product" class="carousel slide" data-ride="carousel">
-
-                <!-- Wrapper for slides -->
-                <div class="carousel-inner">
-                    <div class="item active">
-                        <a href=""><img src="images/product-details/similar1.jpg" alt=""></a>
-                        <a href=""><img src="images/product-details/similar2.jpg" alt=""></a>
-                        <a href=""><img src="images/product-details/similar3.jpg" alt=""></a>
-                    </div>
-                    <div class="item">
-                        <a href=""><img src="images/product-details/similar1.jpg" alt=""></a>
-                        <a href=""><img src="images/product-details/similar2.jpg" alt=""></a>
-                        <a href=""><img src="images/product-details/similar3.jpg" alt=""></a>
-                    </div>
-                    <div class="item">
-                        <a href=""><img src="images/product-details/similar1.jpg" alt=""></a>
-                        <a href=""><img src="images/product-details/similar2.jpg" alt=""></a>
-                        <a href=""><img src="images/product-details/similar3.jpg" alt=""></a>
-                    </div>
-
-                </div>
-
-                <!-- Controls -->
-                <a class="left item-control" href="#similar-product" data-slide="prev">
-                    <i class="fa fa-angle-left"></i>
-                </a>
-                <a class="right item-control" href="#similar-product" data-slide="next">
-                    <i class="fa fa-angle-right"></i>
-                </a>
-            </div>
-
         </div>
         <div class="col-sm-7">
             <div class="product-information">
                 <!--/product-information-->
-                <img src="images/product-details/new.jpg" class="newarrival" alt="" />
-                <h2>Anne Klein Sleeveless Colorblock Scuba</h2>
-                <p>Web ID: 1089772</p>
-                <img src="images/product-details/rating.png" alt="" />
+                <h2>@Html.DisplayFor(model => model.Description)</h2>
+                <p>BarCode: @Html.DisplayFor(model => model.BarCode)</p>
                 <span>
-                    <span>US $59</span>
-                    <label>Quantity:</label>
-                    <input type="text" value="3" />
+                    <span>@Html.DisplayFor(model => model.Price)</span>
+                    <input type="number" class="span6" placeholder="Qty.">
                     <button type="button" class="btn btn-fefault cart">
                         <i class="fa fa-shopping-cart"></i>
                         Add to cart
@@ -63,8 +32,7 @@
                 </span>
                 <p><b>Availability:</b> In Stock</p>
                 <p><b>Condition:</b> New</p>
-                <p><b>Brand:</b> E-SHOPPER</p>
-                <a href=""><img src="images/product-details/share.png" class="share img-responsive" alt="" /></a>
+                <p><b>Brand:</b> @Html.DisplayFor(model => model.Company.Name)</p>
             </div><!--/product-information-->
         </div>
     </div><!--/product-details-->
@@ -73,63 +41,43 @@
         <!--category-tab-->
         <div class="col-sm-12">
             <ul class="nav nav-tabs">
-                <li><a href="#details" data-toggle="tab">Details</a></li>
+                <li class="active"><a href="#details" data-toggle="tab">Remarks</a></li>
                 <li><a href="#companyprofile" data-toggle="tab">Company Profile</a></li>
                 <li><a href="#tag" data-toggle="tab">Tag</a></li>
-                <li class="active"><a href="#reviews" data-toggle="tab">Reviews (5)</a></li>
+                <li><a href="#reviews" data-toggle="tab">Reviews (5)</a></li>
             </ul>
         </div>
         <div class="tab-content">
             <div class="tab-pane fade" id="details">
                 <div class="col-sm-3">
-                    <div class="product-image-wrapper">
-                        <div class="single-products">
-                            <div class="productinfo text-center">
-                                <img src="images/home/gallery1.jpg" alt="" />
-                                <h2>$56</h2>
-                                <p>Easy Polo Black Edition</p>
-                                <button type="button" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-3">
-                    <div class="product-image-wrapper">
-                        <div class="single-products">
-                            <div class="productinfo text-center">
-                                <img src="images/home/gallery2.jpg" alt="" />
-                                <h2>$56</h2>
-                                <p>Easy Polo Black Edition</p>
-                                <button type="button" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-3">
-                    <div class="product-image-wrapper">
-                        <div class="single-products">
-                            <div class="productinfo text-center">
-                                <img src="images/home/gallery3.jpg" alt="" />
-                                <h2>$56</h2>
-                                <p>Easy Polo Black Edition</p>
-                                <button type="button" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-3">
-                    <div class="product-image-wrapper">
-                        <div class="single-products">
-                            <div class="productinfo text-center">
-                                <img src="images/home/gallery4.jpg" alt="" />
-                                <h2>$56</h2>
-                                <p>Easy Polo Black Edition</p>
-                                <button type="button" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</button>
-                            </div>
-                        </div>
+                    <div class="col-sm-3">
+                        @if (string.IsNullOrEmpty(Model.Remarks))
+                        {
+                            <h2>Not remarks for this product</h2>
+
+                        }
+                        else
+                        {
+                            @Html.DisplayFor(model => model.Price)
+                        }
+
                     </div>
                 </div>
             </div>
+            <div class="tab-pane fade" id="companyprofile">
+                <div class="col-sm-3">
+                    
+                    @if (!string.IsNullOrEmpty(Model.Company.Logo))
+                    {
+                        <img src="@Url.Content(Model.Company.Logo)" alt="Image"
+                             style="width:200px; height:200px; max-width:100%;" />
+                    }
+                </div>
+                <h2>@Html.DisplayFor(model => model.Company.Name)</h2>
+
+            </div>
+
+
         </div>
     </div>
 </div>

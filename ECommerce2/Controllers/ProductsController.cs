@@ -11,6 +11,7 @@ using ECommerce2.Classes;
 
 namespace ECommerce2.Controllers
 {
+    [Authorize(Roles ="User")]
     public class ProductsController : Controller
     {
         private ECommerceContext db = new ECommerceContext();

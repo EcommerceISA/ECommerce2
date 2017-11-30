@@ -287,12 +287,17 @@
     <Compile Include="Migrations\201711231739013_Fix.Designer.cs">
       <DependentUpon>201711231739013_Fix.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201711300420115_AddCompanyCustomers.cs" />
+    <Compile Include="Migrations\201711300420115_AddCompanyCustomers.Designer.cs">
+      <DependentUpon>201711300420115_AddCompanyCustomers.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AddProductView.cs" />
     <Compile Include="Models\Category.cs" />
     <Compile Include="Models\City.cs" />
     <Compile Include="Models\Company.cs" />
+    <Compile Include="Models\CompanyCustomer.cs" />
     <Compile Include="Models\Customer.cs" />
     <Compile Include="Models\ECommerceContext.cs" />
     <Compile Include="Models\IdentityModels.cs" />
@@ -316,6 +321,7 @@
     <Content Include="Content\animate.css" />
     <Content Include="Content\bootstrap-datetimepicker.css" />
     <Content Include="Content\bootstrap-datetimepicker.min.css" />
+    <Content Include="Content\bootstrap-responsive.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\Carousel\frutas.jpg" />
@@ -325,6 +331,10 @@
     <Content Include="Content\Carousel\leche.jpg" />
     <Content Include="Content\Carousel\pricing.png" />
     <Content Include="Content\Carousel\verduras.jpg" />
+    <Content Include="Content\font-awesome-ie7.css" />
+    <Content Include="Content\font-awesome-ie7.min.css" />
+    <Content Include="Content\font-awesome.css" />
+    <Content Include="Content\font-awesome.min.css" />
     <Content Include="Content\Logos\404.png" />
     <Content Include="Content\Logos\logo.png" />
     <Content Include="Content\Logos\searchicon.png" />
@@ -528,6 +538,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201711231739013_Fix.resx">
       <DependentUpon>201711231739013_Fix.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201711300420115_AddCompanyCustomers.resx">
+      <DependentUpon>201711300420115_AddCompanyCustomers.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

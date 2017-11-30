@@ -11,6 +11,7 @@ using ECommerce2.Classes;
 
 namespace ECommerce2.Controllers
 {
+    [Authorize(Roles ="User")]
     public class OrdersController : Controller
     {
         private ECommerceContext db = new ECommerceContext();
@@ -18,7 +19,7 @@ namespace ECommerce2.Controllers
         public ActionResult AddProduct()
         {
             var user = db.Users.Where(u => u.UserName == User.Identity.Name).FirstOrDefault();
-            ViewBag.ProductId = new SelectList(CombosHelper.GetProducts(user.CompanyId), "ProductId", "Description");
+            ViewBag.ProductId = new SelectList(CombosHelper.GetProducts(user.CompanyId, true), "ProductId", "Description");
             return PartialView();
         }
 

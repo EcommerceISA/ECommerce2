@@ -29,6 +29,9 @@ namespace ECommerce2
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
+                      "~/Content/bootstrap-responsive.css",
+                      "~/Content/font-awesome-ie7.css",
+                      "~/Content/font-awesome.css",
                       "~/Content/animate.css",
                       "~/Content/main.css",
                       "~/Content/prettyPhoto.css",

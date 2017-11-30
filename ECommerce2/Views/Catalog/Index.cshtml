@@ -23,8 +23,8 @@
                         <div class="product-overlay">
                             <div class="overlay-content">
                                 <h2>@Html.DisplayFor(modelItem => item.Price)</h2>
-                                <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
-                                <i>@Html.ActionLink("Details", "Detail", "Catalog", new { }, new { @class = "btn btn-default add-to-cart" })</i>
+                                <i>@Html.ActionLink("Add to Cart", "ShopingCart", "Catalog", new { companyId = item.CompanyId, productId = item.ProductId }, new { @class = "btn btn-default add-to-cart" })</i>
+                                <i>@Html.ActionLink("Details", "Details", "Catalog", new { companyId=item.CompanyId, productId=item.ProductId }, new { @class = "btn btn-default add-to-cart" })</i>
                             </div>
                         </div>
                     </div>

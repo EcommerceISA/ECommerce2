@@ -12,6 +12,7 @@ using System.IO;
 
 namespace ECommerce2.Controllers
 {
+    [Authorize(Roles ="Admin")]
     public class UsersController : Controller
     {
         private ECommerceContext db = new ECommerceContext();
@@ -214,11 +215,18 @@ namespace ECommerce2.Controllers
         {
             User user = db.Users.Find(id);
             db.Users.Remove(user);
-            db.SaveChanges();
-            return RedirectToAction("Index");
+
+            var response = DBHelper.SaveChanges(db);
+
+            if (response.Succeeded)
+            {
+                UsersHelper.DeleteUser(user.UserName, "Customer");
+                return RedirectToAction("Index");
+            }
+            ModelState.AddModelError(string.Empty, response.Message);
+            return View(user);
+
         }
-
-
 
         protected override void Dispose(bool disposing)
         {

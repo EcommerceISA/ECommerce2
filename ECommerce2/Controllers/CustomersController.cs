@@ -11,6 +11,7 @@ using ECommerce2.Classes;
 
 namespace ECommerce2.Controllers
 {
+    [Authorize(Roles ="User")]
     public class CustomersController : Controller
     {
         private ECommerceContext db = new ECommerceContext();
@@ -19,8 +20,20 @@ namespace ECommerce2.Controllers
         public ActionResult Index()
         {
             var user = db.Users.Where(u => u.UserName == User.Identity.Name).FirstOrDefault();
-            var customer = db.Customers.Where(c => c.CompanyId == user.CompanyId).Include(c => c.City).Include(c => c.State);
-            return View(customer.ToList());
+
+            var qry = (from cu in db.Customers
+                       join cc in db.CompanyCustomers on cu.CustomerId equals cc.CustomerId
+                       join co in db.Companies on cc.CompanyId equals co.CompanyId
+                       where co.CompanyId == user.CompanyId
+                       select new { cu }).ToList();
+
+            var customers = new List<Customer>();
+            foreach (var item in qry)
+            {
+                customers.Add(item.cu);
+            }
+
+            return View(customers.ToList());
         }
 
         // GET: Customers/Details/5
@@ -45,17 +58,14 @@ namespace ECommerce2.Controllers
             var user = db.Users.Where(u => u.UserName == User.Identity.Name).FirstOrDefault();
 
             ViewBag.CityId = new SelectList(
-                CombosHelper.GetCities(), 
+                CombosHelper.GetCities(),
                 "CityId", "Name");
 
             ViewBag.StateId = new SelectList(
-                CombosHelper.GetStates(), 
+                CombosHelper.GetStates(),
                 "StateId", "Name");
 
-            var customer = new Customer {
-                CompanyId = user.CompanyId
-            };
-            return View(customer);
+            return View();
         }
 
         // POST: Customers/Create
@@ -67,9 +77,48 @@ namespace ECommerce2.Controllers
         {
             if (ModelState.IsValid)
             {
+
+                using (var transaction = db.Database.BeginTransaction())
+                {
+                    try
+                    {
+                        db.Customers.Add(customer);
+                        var response = DBHelper.SaveChanges(db);
+                        if (!response.Succeeded)
+                        {
+                            ModelState.AddModelError(string.Empty, response.Message);
+                            transaction.Rollback();
+                            ViewBag.CityId = new SelectList(db.Cities, "CityId", "Name", customer.CityId);
+                            ViewBag.StateId = new SelectList(db.States, "StateId", "Name", customer.StateId);
+                            return View(customer);
+                        }
+
+                        UsersHelper.CreateUserASP(customer.UserName, "Customer");
+                        var user = db.Users.Where(u => u.UserName == User.Identity.Name).FirstOrDefault();
+
+                        var companycustomer = new CompanyCustomer{
+                            CompanyId = user.CompanyId,
+                            CustomerId = customer.CustomerId
+                        };
+
+                        db.CompanyCustomers.Add(companycustomer);
+                        db.SaveChanges();
+
+                        transaction.Commit();
+                        return RedirectToAction("Index");
+
+                    }
+                    catch (Exception ex)
+                    {
+                        transaction.Rollback();
+
+                    }
+                }
+
+
+
                 db.Customers.Add(customer);
                 db.SaveChanges();
-                UsersHelper.CreateUserASP(customer.UserName, "Customer");
                 return RedirectToAction("Index");
             }
 
@@ -92,13 +141,13 @@ namespace ECommerce2.Controllers
                 return HttpNotFound();
             }
             ViewBag.CityId = new SelectList(
-                CombosHelper.GetCities(), 
-                "CityId", "Name", 
+                CombosHelper.GetCities(),
+                "CityId", "Name",
                 customer.CityId);
 
             ViewBag.StateId = new SelectList(
-                CombosHelper.GetStates(), 
-                "StateId", "Name", 
+                CombosHelper.GetStates(),
+                "StateId", "Name",
                 customer.StateId);
 
             return View(customer);
@@ -118,7 +167,6 @@ namespace ECommerce2.Controllers
                 return RedirectToAction("Index");
             }
             ViewBag.CityId = new SelectList(db.Cities, "CityId", "Name", customer.CityId);
-            ViewBag.CompanyId = new SelectList(db.Companies, "CompanyId", "Name", customer.CompanyId);
             ViewBag.StateId = new SelectList(db.States, "StateId", "Name", customer.StateId);
             return View(customer);
         }
@@ -144,15 +192,26 @@ namespace ECommerce2.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             Customer customer = db.Customers.Find(id);
-            db.Customers.Remove(customer);
-            var response = DBHelper.SaveChanges(db);
-            if (response.Succeeded)
+            var user = db.Users.Where(u => u.UserName ==User.Identity.Name).FirstOrDefault();
+            var companyCustomer = db.CompanyCustomers
+                .Where(cc => cc.CompanyId == user.CompanyId 
+                && cc.CustomerId == customer.CustomerId)
+                .FirstOrDefault();
+
+            using (var transaction = db.Database.BeginTransaction())
             {
-                UsersHelper.DeleteUser(customer.UserName);
-                return RedirectToAction("Index");
+                db.CompanyCustomers.Remove(companyCustomer);
+                db.Customers.Remove(customer);
+                var response = DBHelper.SaveChanges(db);
+                if (response.Succeeded)
+                {
+                    transaction.Commit();
+                    return RedirectToAction("Index");
+                }
+                transaction.Rollback();
+                ModelState.AddModelError(string.Empty, response.Message);
+                return View(customer);
             }
-            ModelState.AddModelError(string.Empty, response.Message);
-            return View(customer);
         }
 
         protected override void Dispose(bool disposing)

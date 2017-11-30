@@ -10,6 +10,7 @@ using ECommerce2.Models;
 
 namespace ECommerce2.Controllers
 {
+    [Authorize(Roles ="User")]
     public class TaxesController : Controller
     {
         private ECommerceContext db = new ECommerceContext();
