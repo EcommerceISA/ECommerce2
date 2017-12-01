@@ -8,40 +8,26 @@ namespace ECommerce2.Models
 {
     public class ShopingCart
     {
-        [Key]
-        public int ShopingCartId { get; set; }
-
-//        [Required(ErrorMessage = "The field {0} is required")]
-        [MaxLength(256, ErrorMessage = "The field {0} must be maximum {1} chacarters length")]
-        public string UserName { get; set; }
 
         [Required(ErrorMessage = "The field {0} is required")]
-        public int ProductId { get; set; }
+        [Range(1, double.MaxValue, ErrorMessage = "You must select a {0}")]
+        [Display(Name = "Customer")]
+        public int CustomerId { get; set; }
 
         [Required(ErrorMessage = "The field {0} is required")]
-        [MaxLength(100, ErrorMessage = "The field {0} must be maximum {1} characters length")]
-        [Display(Name = "Product")]
-        public string Description { get; set; }
+        [DataType(DataType.Date)]
+        public DateTime Date { get; set; }
 
-        [Required(ErrorMessage = "The field {0} is required")]
-        [Range(0, double.MaxValue, ErrorMessage = "You must enter calues in {0} between {1} and {2}")]
-        [Display(Name = "Tax Rate")]
-        public double TaxRate { get; set; }
+        [DataType(DataType.MultilineText)]
+        public string Remarks { get; set; }
 
-        [Required(ErrorMessage = "The field {0} is required")]
-        [DisplayFormat(DataFormatString = "{0:C2}", ApplyFormatInEditMode = false)]
-        [Range(0, double.MaxValue, ErrorMessage = "You must enter values in {0} between {1} and {2}")]
-        public decimal Price { get; set; }
+        public List<OrderDetailTmp> Details { get; set; }
 
-        [Required(ErrorMessage = "The field {0} is required")]
-        [DisplayFormat(DataFormatString = "{0:C2}", ApplyFormatInEditMode = false)]
-        [Range(0, double.MaxValue, ErrorMessage = "You must enter values in {0} between {1} and {2}")]
-        public double Quantity { get; set; }
+        [DisplayFormat(DataFormatString = "{0:N2}", ApplyFormatInEditMode = false)]
+        public double TotalQuantity { get { return Details == null ? 0 : Details.Sum(d => d.Quantity); } }
 
         [DisplayFormat(DataFormatString = "{0:C2}", ApplyFormatInEditMode = false)]
-        public decimal Value { get { return Price * (decimal)Quantity; } }
-
-        public virtual Product Product { get; set; }
+        public decimal TotalValue { get { return Details == null ? 0 : Details.Sum(d => d.Value); } }
 
 
     }

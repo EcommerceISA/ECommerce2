@@ -27,7 +27,11 @@ namespace ECommerce2.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+
+
             var product = db.Products.Where(p => p.CompanyId == companyId && p.ProductId == productId).First();
+
+            string hola = "hola";
 
             if (product == null)
             {
@@ -49,16 +53,33 @@ namespace ECommerce2.Controllers
 
         public ActionResult ViewCategories(string categoryName)
         {
-            var category = db.Categories.Where(c => c.Description.Equals(categoryName)).FirstOrDefault();
-            var products = db.Products.Where(c => c.CategoryId == category.CategoryId).ToList();
-
-            if (products == null)
+            try
             {
-                return RedirectToAction("Index");
+                var category = db.Categories.Where(c => c.Description.Equals(categoryName)).FirstOrDefault();
 
+                if (categoryName == null)
+                {
+                    return RedirectToAction("Index");
+
+                }
+
+                var products = db.Products.Where(c => c.CategoryId == category.CategoryId).ToList();
+                if (products == null)
+                {
+                    return RedirectToAction("Index");
+
+                }
+                return View("Index", products);
             }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError(string.Empty, ex.Message);
+                return RedirectToAction("Index","Catalog");
+            }
+
             //string hola = "hola";
-            return View("Index", products);
+            return RedirectToAction("Index", "Catalog");
+
         }
 
     }

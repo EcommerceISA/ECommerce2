@@ -309,6 +309,7 @@
     <Compile Include="Models\OrderDetailTmp.cs" />
     <Compile Include="Models\Product.cs" />
     <Compile Include="Models\Response.cs" />
+    <Compile Include="Models\ShopingCart.cs" />
     <Compile Include="Models\State.cs" />
     <Compile Include="Models\Status.cs" />
     <Compile Include="Models\Tax.cs" />
@@ -464,6 +465,8 @@
     <Content Include="Views\Orders\AddProduct.cshtml" />
     <Content Include="Views\OrderCustomers\Index.cshtml" />
     <Content Include="Views\OrderCustomers\Create.cshtml" />
+    <Content Include="Views\OrderCustomers\CreateOrder.cshtml" />
+    <Content Include="Views\OrderCustomers\AddProduct.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

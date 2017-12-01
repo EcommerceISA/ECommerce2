@@ -52,6 +52,53 @@ namespace ECommerce2.Classes
 
 
         }
+        public static Response NewOrder(ShopingCart view, string userName)
+        {
+            using (var transaction = db.Database.BeginTransaction())
+            {
+                var user = db.Customers.Where(u => u.UserName == userName).FirstOrDefault();
+
+                foreach (var item in view.Details)
+                {
+                    var order = new Order
+                    {
+                        CompanyId = item.Product.CompanyId,
+                        CustomerId = view.CustomerId,
+                        Date = view.Date,
+                        Remarks = view.Remarks,
+                        StatusId = DBHelper.GetStatus("Created", db),
+                    };
+
+                    db.Orders.Add(order);
+                    db.SaveChanges();
+
+
+                    var details = db.OrderDetailTmps.Where(odt => odt.UserName == userName).ToList();
+
+                    foreach (var detail in details)
+                    {
+                        var orderDetail = new OrderDetail
+                        {
+                            Description = detail.Description,
+                            OrderId = order.OrderId,
+                            Price = detail.Price,
+                            ProductId = detail.ProductId,
+                            Quantity = detail.Quantity,
+                            TaxRate = detail.TaxRate,
+                        };
+                        db.OrderDetails.Add(orderDetail);
+                        db.OrderDetailTmps.Remove(detail);
+
+                    }
+                }
+
+                db.SaveChanges();
+                transaction.Commit();
+                return new Response { Succeeded = true };
+            }
+
+
+        }
         public void Dispose()
         {
             db.Dispose();

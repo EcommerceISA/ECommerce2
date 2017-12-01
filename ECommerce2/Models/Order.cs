@@ -26,8 +26,9 @@ namespace ECommerce2.Models
         [Display(Name = "Status")]
         public int StatusId { get; set; }
 
-        [Required(ErrorMessage ="The field {0} is required")]
+        [Required(ErrorMessage = "The field {0} is required 123")]
         [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime Date { get; set; }
 
         [DataType(DataType.MultilineText)]
