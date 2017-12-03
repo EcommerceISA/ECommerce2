@@ -203,6 +203,7 @@
     <Compile Include="Controllers\CustomersController.cs" />
     <Compile Include="Controllers\GenericController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\InventoriesController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\OrderCustomersController.cs" />
     <Compile Include="Controllers\OrdersController.cs" />
@@ -467,6 +468,11 @@
     <Content Include="Views\OrderCustomers\Create.cshtml" />
     <Content Include="Views\OrderCustomers\CreateOrder.cshtml" />
     <Content Include="Views\OrderCustomers\AddProduct.cshtml" />
+    <Content Include="Views\Inventories\Create.cshtml" />
+    <Content Include="Views\Inventories\Delete.cshtml" />
+    <Content Include="Views\Inventories\Details.cshtml" />
+    <Content Include="Views\Inventories\Edit.cshtml" />
+    <Content Include="Views\Inventories\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
