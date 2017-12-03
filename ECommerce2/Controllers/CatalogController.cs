@@ -31,8 +31,6 @@ namespace ECommerce2.Controllers
 
             var product = db.Products.Where(p => p.CompanyId == companyId && p.ProductId == productId).First();
 
-            string hola = "hola";
-
             if (product == null)
             {
                 return HttpNotFound();
@@ -76,10 +74,14 @@ namespace ECommerce2.Controllers
                 ModelState.AddModelError(string.Empty, ex.Message);
                 return RedirectToAction("Index","Catalog");
             }
+        }
 
-            //string hola = "hola";
-            return RedirectToAction("Index", "Catalog");
+        public ActionResult Search(string searchString) {
 
+            var products = db.Products.Where(p => p.Description.Contains(searchString));
+            
+
+            return View("Index", products.ToList());
         }
 
     }
