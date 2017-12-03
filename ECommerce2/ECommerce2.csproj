@@ -292,6 +292,10 @@
     <Compile Include="Migrations\201711300420115_AddCompanyCustomers.Designer.cs">
       <DependentUpon>201711300420115_AddCompanyCustomers.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201712031918107_AddSales.cs" />
+    <Compile Include="Migrations\201712031918107_AddSales.Designer.cs">
+      <DependentUpon>201712031918107_AddSales.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AddProductView.cs" />
@@ -310,6 +314,8 @@
     <Compile Include="Models\OrderDetailTmp.cs" />
     <Compile Include="Models\Product.cs" />
     <Compile Include="Models\Response.cs" />
+    <Compile Include="Models\Sale.cs" />
+    <Compile Include="Models\SaleDetail.cs" />
     <Compile Include="Models\ShopingCart.cs" />
     <Compile Include="Models\State.cs" />
     <Compile Include="Models\Status.cs" />
@@ -550,6 +556,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201711300420115_AddCompanyCustomers.resx">
       <DependentUpon>201711300420115_AddCompanyCustomers.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201712031918107_AddSales.resx">
+      <DependentUpon>201712031918107_AddSales.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
