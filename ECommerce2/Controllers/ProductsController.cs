@@ -85,41 +85,47 @@ namespace ECommerce2.Controllers
         //[Authorize(Roles = "User")]
         public ActionResult Create(Product product)
         {
-            var user = db.Users.Where(u => u.UserName == User.Identity.Name).FirstOrDefault();
-
-            if (ModelState.IsValid)
+            try
             {
-                db.Products.Add(product);
-                db.SaveChanges();
+                var user = db.Users.Where(u => u.UserName == User.Identity.Name).FirstOrDefault();
 
-                if (product.ImageFile != null)
+                if (ModelState.IsValid)
                 {
-                    var folder = "~/Content/Products";
-                    var file = string.Format("{0}.jpg", product.ProductId);
-                    var response = FilesHelper.UploadPhoto(
-                        product.ImageFile, folder, file);
+                    db.Products.Add(product);
+                    db.SaveChanges();
 
-                    if (response)
+                    if (product.ImageFile != null)
                     {
-                        var pic = string.Format("{0}/{1}", folder, file);
-                        product.Image = pic;
-                        db.Entry(product).State = EntityState.Modified;
-                        db.SaveChanges();
+                        var folder = "~/Content/Products";
+                        var file = string.Format("{0}.jpg", product.ProductId);
+                        var response = FilesHelper.UploadPhoto(
+                            product.ImageFile, folder, file);
+
+                        if (response)
+                        {
+                            var pic = string.Format("{0}/{1}", folder, file);
+                            product.Image = pic;
+                            db.Entry(product).State = EntityState.Modified;
+                            db.SaveChanges();
+                        }
                     }
+
+                    return RedirectToAction("Index");
                 }
 
-                return RedirectToAction("Index");
+                ViewBag.CategoryId = new SelectList(
+                    CombosHelper.GetCategories(user.CompanyId),
+                    "CategoryId",
+                    "Description");
+
+                ViewBag.TaxId = new SelectList(
+                    CombosHelper.GetTaxes(user.CompanyId),
+                    "TaxId", "Description");
             }
-
-            ViewBag.CategoryId = new SelectList(
-                CombosHelper.GetCategories(user.CompanyId),
-                "CategoryId",
-                "Description");
-
-            ViewBag.TaxId = new SelectList(
-                CombosHelper.GetTaxes(user.CompanyId),
-                "TaxId", "Description");
-
+            catch (Exception ex) {
+                ModelState.AddModelError(string.Empty, ex.Message);
+                return View("Index");
+            }
             return View(product);
         }
 
@@ -163,22 +169,30 @@ namespace ECommerce2.Controllers
         {
             if (ModelState.IsValid)
             {
+                if (product.ImageFile != null)
+                {
+                    var pic = string.Empty;
+                    var folder = "~/Content/Products";
+                    var file = string.Format("{0}.jpg", product.ProductId);
+                    var response = FilesHelper.UploadPhoto(product.ImageFile, folder, file);
+                    if (response)
+                    {
+                        pic = string.Format("{0}/{1}", folder, file);
+                        product.Image = pic;
+                    }
+                }
                 db.Entry(product).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                var response2 = DBHelper.SaveChanges(db);
+                if (response2.Succeeded)
+                {
+                    return RedirectToAction("Index");
+                }
+                ModelState.AddModelError(string.Empty, response2.Message);
             }
-
-            ViewBag.CategoryId = new SelectList(
-                CombosHelper.GetCategories(product.CompanyId),
-                "CategoryId", "Description",
-                product.CategoryId);
-
-            ViewBag.TaxId = new SelectList(
-                CombosHelper.GetTaxes(product.CompanyId),
-                "TaxId", "Description",
-                product.TaxId);
-
+            ViewBag.CategoryId = new SelectList(CombosHelper.GetCategories(product.CompanyId), "CategoryId", "Description");
+            ViewBag.TaxId = new SelectList(CombosHelper.GetTaxes(product.CompanyId), "TaxId", "Description");
             return View(product);
+
         }
 
         // GET: Products/Delete/5

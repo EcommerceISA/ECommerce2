@@ -41,8 +41,12 @@ namespace ECommerce2.Controllers
         // GET: Taxes/Create
         public ActionResult Create()
         {
-            ViewBag.CompanyId = new SelectList(db.Companies, "CompanyId", "Name");
-            return View();
+            var user = db.Users.Where(u => u.UserName == User.Identity.Name).FirstOrDefault();
+            var tax = new Tax {
+                CompanyId = user.CompanyId
+            };
+
+            return View(tax);
         }
 
         // POST: Taxes/Create
@@ -59,7 +63,6 @@ namespace ECommerce2.Controllers
                 return RedirectToAction("Index");
             }
 
-            ViewBag.CompanyId = new SelectList(db.Companies, "CompanyId", "Name", tax.CompanyId);
             return View(tax);
         }
 
@@ -75,7 +78,7 @@ namespace ECommerce2.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.CompanyId = new SelectList(db.Companies, "CompanyId", "Name", tax.CompanyId);
+
             return View(tax);
         }
 
