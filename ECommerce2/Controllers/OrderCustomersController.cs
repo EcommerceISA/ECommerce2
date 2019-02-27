@@ -17,6 +17,8 @@ namespace ECommerce2.Controllers
 
 
         // GET: Create Customer
+
+        [Authorize(Roles = "Admin")]
         public ActionResult Create()
         {
             ViewBag.CityId = new SelectList(
@@ -32,6 +34,7 @@ namespace ECommerce2.Controllers
 
         [HttpPost]
         //POST: Create Customer
+        [Authorize(Roles = "Admin")]
         public ActionResult Create(Customer customer)
         {
             if (ModelState.IsValid)
