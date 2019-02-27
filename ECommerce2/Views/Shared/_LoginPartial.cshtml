@@ -1,22 +1,56 @@
 ﻿@using Microsoft.AspNet.Identity
+<ul class="nav navbar-nav navbar-right">
+    <li>
+        <i class="glyphicon glyphicon-shopping-cart">
+            @Html.ActionLink("Cart", "Register", "Account")
+        </i>
+    </li>
+</ul>
+
 @if (Request.IsAuthenticated)
 {
+
+
     using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
     {
-    @Html.AntiForgeryToken()
+        @Html.AntiForgeryToken()
 
-    <ul class="nav navbar-nav navbar-right">
-        <li>
-            @Html.ActionLink("Hello " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
-        </li>
-        <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
-    </ul>
+        <ul class="nav navbar-nav navbar-right">
+            
+            <li>
+                @if (Session["Logo"] != null)
+                {
+                    <img src="@Url.Content(Session["Logo"].ToString())" alt="Image" style="width:50px;height:50px;max-width: 100%; height: auto; padding-top: 5px" />
+                }
+            </li>
+            
+            <li>
+                <span class="glyphicon glyphicon-user">
+                    @Html.ActionLink("Hello: " + User.Identity.GetUserName(), "Index", "Manage")
+                </span>
+            </li>
+
+            <li>
+                <span  class="glyphicon glyphicon-log-out">
+                    <a href="javascript:document.getElementById('logoutForm').submit()">Log off</a>
+                </span>
+            </li>
+        </ul>
     }
 }
 else
 {
     <ul class="nav navbar-nav navbar-right">
-        <li>@Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
-        <li>@Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
+        <li>
+            <i class="glyphicon glyphicon-open">
+                @Html.ActionLink("Register", "Create", "OrderCustomers")
+            </i>
+        </li>
+
+        <li>
+            <i class="glyphicon glyphicon-log-in">
+                @Html.ActionLink("Log in", "Login", "Account")
+            </i>
+        </li>
     </ul>
 }

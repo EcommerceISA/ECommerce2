@@ -1,0 +1,83 @@
+﻿@model ECommerce2.Models.Product
+
+@{
+    ViewBag.Title = "ProductsDetail";
+}
+
+
+<div class="col-sm-9 padding-right">
+    <div class="product-details">
+        <!--product-details-->
+        <div class="col-sm-5">
+            <div class="view-product">
+                @if (!string.IsNullOrEmpty(Model.Image))
+                {
+                    <img src="@Url.Content(Model.Image)" alt="Image"
+                         style="width:400px; height:250px; max-width:100%;" />
+                }
+            </div>
+        </div>
+        <div class="col-sm-7">
+            <div class="product-information">
+                <!--/product-information-->
+                <h2>@Html.DisplayFor(model => model.Description)</h2>
+                <p>BarCode: @Html.DisplayFor(model => model.BarCode)</p>
+                <span>
+                    <span>@Html.DisplayFor(model => model.Price)</span>
+                    <input type="number" class="span6" placeholder="Qty.">
+                    <button type="button" class="btn btn-fefault cart">
+                        <i class="fa fa-shopping-cart"></i>
+                        Add to cart
+                    </button>
+                </span>
+                <p><b>Availability:</b> In Stock</p>
+                <p><b>Condition:</b> New</p>
+                <p><b>Brand:</b> @Html.DisplayFor(model => model.Company.Name)</p>
+            </div><!--/product-information-->
+        </div>
+    </div><!--/product-details-->
+
+    <div class="category-tab shop-details-tab">
+        <!--category-tab-->
+        <div class="col-sm-12">
+            <ul class="nav nav-tabs">
+                <li class="active"><a href="#details" data-toggle="tab">Remarks</a></li>
+                <li><a href="#companyprofile" data-toggle="tab">Company Profile</a></li>
+                <li><a href="#tag" data-toggle="tab">Tag</a></li>
+                <li><a href="#reviews" data-toggle="tab">Reviews (5)</a></li>
+            </ul>
+        </div>
+        <div class="tab-content">
+            <div class="tab-pane fade" id="details">
+                <div class="col-sm-3">
+                    <div class="col-sm-3">
+                        @if (string.IsNullOrEmpty(Model.Remarks))
+                        {
+                            <h2>Not remarks for this product</h2>
+
+                        }
+                        else
+                        {
+                            @Html.DisplayFor(model => model.Remarks)
+                        }
+
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane fade" id="companyprofile">
+                <div class="col-sm-3">
+                    
+                    @if (!string.IsNullOrEmpty(Model.Company.Logo))
+                    {
+                        <img src="@Url.Content(Model.Company.Logo)" alt="Image"
+                             style="width:200px; height:200px; max-width:100%;" />
+                    }
+                </div>
+                <h2>@Html.DisplayFor(model => model.Company.Name)</h2>
+
+            </div>
+
+
+        </div>
+    </div>
+</div>

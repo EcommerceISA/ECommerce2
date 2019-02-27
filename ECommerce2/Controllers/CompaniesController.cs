@@ -11,6 +11,7 @@ using ECommerce2.Classes;
 
 namespace ECommerce2.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class CompaniesController : Controller
     {
         private ECommerceContext db = new ECommerceContext();
@@ -128,7 +129,7 @@ namespace ECommerce2.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "CompanyId,Name,Phone,Address,Logo,StateId,CityId")] Company company)
+        public ActionResult Edit(Company company)
         {
             if (ModelState.IsValid)
             {
@@ -156,7 +157,7 @@ namespace ECommerce2.Controllers
                 "Name",
                 company.CityId);
 
-            ViewBag.DepartmentId = new SelectList(
+            ViewBag.StateId = new SelectList(
                 CombosHelper.GetStates(),
                 "StateId",
                 "Name",
@@ -177,13 +178,6 @@ namespace ECommerce2.Controllers
                 return HttpNotFound();
             }
             return View(company);
-        }
-
-        public JsonResult GetCities(int stateId)
-        {
-            db.Configuration.ProxyCreationEnabled = false;
-            var cities = db.Cities.Where(m => m.StateId == stateId);
-            return Json(cities);
         }
 
         // POST: Companies/Delete/5

@@ -21,15 +21,22 @@ namespace ECommerce2
 
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
                       "~/Scripts/bootstrap.js",
+                      "~/Scripts/moment.js",
+                      "~/Scripts/fileupload.js",
+                      "~/Scripts/ecommerce.js",
+                      "~/Scripts/bootstrap-datetimepicker.js",
                       "~/Scripts/respond.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
+                      "~/Content/bootstrap-responsive.css",
+                      "~/Content/font-awesome-ie7.css",
+                      "~/Content/font-awesome.css",
                       "~/Content/animate.css",
-                      "~/Content/font-awesome.min.css",
                       "~/Content/main.css",
                       "~/Content/prettyPhoto.css",
                       "~/Content/price-range.css",
+                      "~/Content/bootstrap-datepicker.css",
                       "~/Content/responsive.css",
                       "~/Content/site.css"));
         }
