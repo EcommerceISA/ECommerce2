@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Collections;
 
 namespace ECommerce2.Classes
 {
@@ -23,6 +24,35 @@ namespace ECommerce2.Classes
 
         }
 
+        public static List<Product> GetProducts(int companyId, bool sw)
+        {
+            var products = db.Products.Where(p => p.CompanyId == companyId).ToList();
+            return products.OrderBy(p => p.Description).ToList();
+        }
+
+
+        public static List<Product> GetProducts(int companyId)
+        {
+            var product = db.Products.Where(p => p.CompanyId ==companyId).ToList();
+            product.Add(new Product
+            {
+                ProductId = 0,
+                Description="[Select a product ...]"
+            });
+            return product.OrderBy(p => p.Description).ToList();
+        }
+
+        public static List<Product> GetProducts()
+        {
+            var product = db.Products.ToList();
+            product.Add(new Product
+            {
+                ProductId = 0,
+                Description = "[Select a product ...]"
+            });
+            return product.OrderBy(p => p.Description).ToList();
+        }
+
         public static List<City> GetCities()
         {
             var cities = db.Cities.ToList();
@@ -30,6 +60,18 @@ namespace ECommerce2.Classes
             {
                 CityId = 0,
                 Name = "[Select a city...]"
+            });
+
+            return cities.OrderBy(d => d.Name).ToList();
+        }
+
+        public static List<City> GetCities(int stateId)
+        {
+            var cities = db.Cities.Where(c => c.StateId == stateId).OrderBy(d => d.Name).ToList();
+            cities.Add(new City
+            {
+                CityId = 0,
+                Name = "[Select a City...]"
             });
 
             return cities.OrderBy(d => d.Name).ToList();
@@ -46,7 +88,29 @@ namespace ECommerce2.Classes
 
             return companies.OrderBy(d => d.Name).ToList();
         }
-        /*
+
+        public static List<Customer> GetCustomers(int companyId)
+        {
+            var qry = (from cu in db.Customers
+                       join cc in db.CompanyCustomers on cu.CustomerId equals cc.CustomerId
+                       join co in db.Companies on cc.CompanyId equals co.CompanyId
+                       where co.CompanyId == companyId
+                       select new { cu }).ToList();
+
+            var customers = new List<Customer>();
+            foreach (var item in qry)
+            {
+                customers.Add(item.cu);
+            }
+
+            customers.Add(new Customer {
+                CustomerId=0,
+                FirstName = "[Select a customer...]" 
+            });
+            
+            return customers.OrderBy(d => d.FirstName).ThenBy(c => c.LastName).ToList();
+        }
+
         public static List<Tax> GetTaxes(int companyId)
         {
             var taxes = db.Taxes.Where(t => t.CompanyId == companyId).ToList();
@@ -70,7 +134,8 @@ namespace ECommerce2.Classes
 
             return categories.OrderBy(d => d.Description).ToList();
         }
-        */
+        
+        
         public void Dispose()
         {
             db.Dispose();

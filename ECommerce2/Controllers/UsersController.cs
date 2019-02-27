@@ -1,16 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
+﻿using ECommerce2.Classes;
+using ECommerce2.Models;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
-using ECommerce2.Models;
-using ECommerce2.Classes;
 
 namespace ECommerce2.Controllers
 {
+    [Authorize(Roles ="Admin")]
     public class UsersController : Controller
     {
         private ECommerceContext db = new ECommerceContext();
@@ -71,11 +68,12 @@ namespace ECommerce2.Controllers
                 if (user.PhotoFile != null)
                 {
                     var folder = "~/Content/Users";
-                    var file = string.Format($"{user.UserId}.jpg");
+ 
+                    var file = string.Format("{0}.jpg", user.UserId);
                     var response = FilesHelper.UploadPhoto(user.PhotoFile, folder, file);
                     if (response)
                     {
-                        var pic = string.Format($"{folder}/{file}");
+                        var pic = string.Format("{0}/{1}", folder, file);
                         user.Photo = pic;
                         db.Entry(user).State = EntityState.Modified;
                         db.SaveChanges();
@@ -145,11 +143,13 @@ namespace ECommerce2.Controllers
                 if (user.PhotoFile != null)
                 {
                     var folder = "~/Content/Users";
-                    var file = string.Format($"{user.UserId}.jpg");
+                    
+                    var file = string.Format("{0}.jpg", user.UserId);
                     var response = FilesHelper.UploadPhoto(user.PhotoFile, folder, file);
+
                     if (response)
                     {
-                        var pic = string.Format($"{folder}/{file}");
+                        var pic = string.Format("{0}/{1}", folder, file);
                         user.Photo = pic;
                     }
 
@@ -210,21 +210,17 @@ namespace ECommerce2.Controllers
         {
             User user = db.Users.Find(id);
             db.Users.Remove(user);
-            db.SaveChanges();
-            return RedirectToAction("Index");
-        }
 
-        public JsonResult GetCities(int stateId)
-        {
-            db.Configuration.ProxyCreationEnabled = false;
-            var cities = db.Cities.Where(m => m.StateId == stateId);
-            return Json(cities);
-        }
-        public JsonResult GetCompanies(int cityId)
-        {
-            db.Configuration.ProxyCreationEnabled = false;
-            var companies = db.Companies.Where(m => m.CityId == cityId);
-            return Json(companies);
+            var response = DBHelper.SaveChanges(db);
+
+            if (response.Succeeded)
+            {
+                UsersHelper.DeleteUser(user.UserName, "Customer");
+                return RedirectToAction("Index");
+            }
+            ModelState.AddModelError(string.Empty, response.Message);
+            return View(user);
+
         }
 
         protected override void Dispose(bool disposing)

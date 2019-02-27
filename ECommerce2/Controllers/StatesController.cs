@@ -10,6 +10,7 @@ using ECommerce2.Models;
 
 namespace ECommerce2.Controllers
 {
+    [Authorize(Roles ="Admin")]
     public class StatesController : Controller
     {
         private ECommerceContext db = new ECommerceContext();
